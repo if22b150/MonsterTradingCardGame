@@ -1,42 +1,39 @@
 package at.technikum.controllers;
 
 import at.technikum.mappers.UserMapper;
-import at.technikum.model.User;
 import at.technikum.repositories.user.IUserRepository;
 import at.technikum.repositories.user.UserRepository;
-import com.sun.net.httpserver.HttpExchange;
+import at.technikum.utils.Response;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-public class UserController {
+public class UserController extends AController {
     private static final IUserRepository userRepository = new UserRepository();
 
-    public static void index(HttpExchange exchange) throws IOException {
-        sendResponse(exchange, UserMapper.usersToJson(userRepository.all()));
+    @Override
+    public Response index() {
+        return new Response(200, UserMapper.usersToJson(userRepository.all()));
     }
 
-    public static void show(HttpExchange exchange, int userId) throws IOException {
-        sendResponse(exchange, UserMapper.userToJson(userRepository.get(userId)));
+    @Override
+    public Response show(int userId) {
+        System.out.println("Show user " + userId);
+        return new Response(200, UserMapper.userToJson(userRepository.get(userId)));
     }
 
-    public static void store(HttpExchange exchange) throws IOException {
+    @Override
+    public Response store() {
         System.out.println("Create User");
+        return new Response(201, "");
     }
 
-    public static void destroy(HttpExchange exchange) throws IOException {
-        System.out.println("Delete User");
+    @Override
+    public Response update(int userId) {
+        System.out.println("Update User " + userId);
+        return new Response(200, "");
     }
 
-    private static void sendResponse(HttpExchange exchange, String response)  throws IOException {
-        try {
-            exchange.sendResponseHeaders(200, response.length());
-            OutputStream os = exchange.getResponseBody();
-            os.write(response.getBytes());
-            os.close();
-        } catch (Exception e) {
-            exchange.sendResponseHeaders(405, 0);
-            exchange.close();
-        }
+    @Override
+    public Response destroy(int id) {
+        System.out.println("Delete User " + id);
+        return new Response(204, "");
     }
 }

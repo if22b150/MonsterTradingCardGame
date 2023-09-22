@@ -6,6 +6,6 @@ import com.sun.net.httpserver.HttpServer;
 public class RouteConfig {
     public static void configureRoutes(HttpServer server) {
         server.createContext("/api/users/", new UserHandler());
-        // Define more routes as needed
+        // Define more routes
     }
 }

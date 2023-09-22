@@ -1,6 +1,6 @@
 package at.technikum.repositories.user;
 
-import at.technikum.model.User;
+import at.technikum.models.User;
 
 import java.util.ArrayList;
 

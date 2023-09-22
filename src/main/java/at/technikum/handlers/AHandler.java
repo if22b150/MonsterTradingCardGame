@@ -1,85 +1,37 @@
 package at.technikum.handlers;
 
-import at.technikum.controllers.UserController;
-import at.technikum.utils.Helper;
-import com.sun.net.httpserver.HttpExchange;
+import at.technikum.controllers.AController;
+import at.technikum.utils.Request;
+import at.technikum.utils.Response;
+import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
+import java.io.OutputStream;
 
-public abstract class AHandler {
+public abstract class AHandler implements HttpHandler {
+    protected Request request;
+    protected AController controller;
     protected String route;
-    protected HttpExchange exchange;
-    protected String path;
-    // Extract the part of the path after "/api/users/"
-    protected String subPath;
-    // Split the subPath into segments
-    protected String[] pathSegments;
-    protected boolean isIndexRoute = false;
-    protected boolean isResourceRoute = false;
 
-
-    public AHandler(String route) {
+    public AHandler(AController controller, String route) {
+        this.controller = controller;
         this.route = "/api" + route;
     }
 
-    protected void initHandler(HttpExchange exchange) throws IOException {
-        this.isIndexRoute = false;
-        this.isResourceRoute = false;
-
-        this.exchange = exchange;
-
-        this.path = exchange.getRequestURI().getPath();
-        this.subPath = path.substring(route.length());
-        this.pathSegments = subPath.split("/");
-
-        // CHECK THE ROUTE
-        if(this.subPath.isEmpty()) {
-            if (this.isGetRequest()) {
-                this.isIndexRoute = true;
-                return;
-            } else {
-                // Handle unsupported HTTP methods
-                this.errorResponse(405);
-            }
-        }
-
-        if (this.pathSegments.length == 1) {
-            if(!Helper.stringIsInteger(this.pathSegments[0])) {
-                this.errorResponse(422);
-            }
-
-            if (this.isGetRequest()) {
-                this.isResourceRoute = true;
-                return;
-            } else {
-                // Handle unsupported HTTP methods
-                this.errorResponse(405);
-            }
-        }
-    }
-
-    protected boolean isGetRequest() {
-        return "GET".equals(exchange.getRequestMethod());
-    }
-
-    protected boolean isPutRequest() {
-        return "PUT".equals(exchange.getRequestMethod());
-    }
-
-    protected boolean isPostRequest() {
-        return "POST".equals(exchange.getRequestMethod());
-    }
-
-    protected boolean isPatchRequest() {
-        return "PATCH".equals(exchange.getRequestMethod());
-    }
-
-    protected boolean isDeleteRequest() {
-        return "DELETE".equals(exchange.getRequestMethod());
-    }
-
     protected void errorResponse(int errorCode) throws IOException {
-        this.exchange.sendResponseHeaders(errorCode, 0);
-        this.exchange.close();
+        this.request.exchange.sendResponseHeaders(errorCode, 0);
+        this.request.exchange.close();
+    }
+
+    protected void sendResponse(Response response)  throws IOException {
+        try {
+            this.request.exchange.sendResponseHeaders(response.getStatus(), response.getContent().length());
+            OutputStream os = this.request.exchange.getResponseBody();
+            os.write(response.getContent().getBytes());
+            os.close();
+        } catch (Exception e) {
+            this.request.exchange.sendResponseHeaders(405, 0);
+            this.request.exchange.close();
+        }
     }
 }
