@@ -13,4 +13,11 @@ public class Helper {
         }
         return true;
     }
+
+    public static String removeSlash(String input) {
+        if (input != null && input.startsWith("/")) {
+            return input.substring(1); // Remove the first character (which is '/')
+        }
+        return input; // Return the input string as is if it doesn't start with '/'
+    }
 }

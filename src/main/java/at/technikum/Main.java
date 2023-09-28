@@ -1,23 +1,17 @@
 package at.technikum;
 
-import at.technikum.config.RouteConfig;
-import com.sun.net.httpserver.HttpServer;
+import at.technikum.server.Server;
+import at.technikum.server.routes.RouteConfig;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-
-        int port = 8080;
-        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-
-        // Configure routes
-        RouteConfig.configureRoutes(server);
-
-        server.setExecutor(null);
-        server.start();
-
-        System.out.println("Server is running on http://localhost:" + port);
+    public static void main(String[] args) {
+        Server server = new Server(8080, RouteConfig.configureRoutes());
+        try {
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

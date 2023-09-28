@@ -1,8 +1,9 @@
 package at.technikum.utils;
 
+import at.technikum.server.HttpMethod;
 import com.sun.net.httpserver.HttpExchange;
 
-public class Request {
+public class OldRequest {
     public HttpExchange exchange;
 
     public String route;
@@ -29,7 +30,7 @@ public class Request {
     public int errorCode = 0;
 
 
-    public Request(String route, HttpExchange exchange) {
+    public OldRequest(String route, HttpExchange exchange) {
         this.route = route;
         this.exchange = exchange;
         this.path = exchange.getRequestURI().getPath();
@@ -71,24 +72,4 @@ public class Request {
             return;
         }
     }
-
-//    protected boolean isGetRequest() {
-//        return "GET".equals(exchange.getRequestMethod());
-//    }
-//
-//    protected boolean isPutRequest() {
-//        return "PUT".equals(exchange.getRequestMethod());
-//    }
-//
-//    protected boolean isPostRequest() {
-//        return "POST".equals(exchange.getRequestMethod());
-//    }
-//
-//    protected boolean isPatchRequest() {
-//        return "PATCH".equals(exchange.getRequestMethod());
-//    }
-//
-//    protected boolean isDeleteRequest() {
-//        return "DELETE".equals(exchange.getRequestMethod());
-//    }
 }

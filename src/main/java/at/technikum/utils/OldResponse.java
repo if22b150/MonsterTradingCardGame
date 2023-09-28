@@ -1,17 +1,13 @@
 package at.technikum.utils;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-
-public class Response {
+public class OldResponse {
     private int status;
     private String message;
     // is always json in this application
     private String contentType;
     private String content;
 
-    public Response(int statusCode, String content) {
+    public OldResponse(int statusCode, String content) {
         this.status = statusCode;
         this.content = content;
         this.contentType = "application/json";

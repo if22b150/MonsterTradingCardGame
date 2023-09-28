@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  java:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: java
+    container_name: java
+    ports:
+      - 80:80
+    command: java --class-path /project/target/classes/at/technikum at.technikum.Main

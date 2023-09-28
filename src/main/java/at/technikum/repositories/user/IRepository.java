@@ -4,11 +4,10 @@ import at.technikum.models.User;
 
 import java.util.ArrayList;
 
-public interface IUserRepository {
+public interface IRepository<T> {
+    ArrayList<T> all();
 
-    ArrayList<User> all();
+    T get(int id);
 
-    User get(int id);
-
-    void create();
+    T create();
 }
