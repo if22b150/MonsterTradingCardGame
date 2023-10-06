@@ -25,6 +25,9 @@ public class UserHandler extends AHandler{
                 // normally we pass the id here, but curl script demands username...
                 return this.userController.index();
             }
+            case POST -> {
+                return this.userController.store(request.getBody());
+            }
         }
 
         return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, "[]");

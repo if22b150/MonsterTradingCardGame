@@ -4,7 +4,7 @@ import at.technikum.models.User;
 
 import java.util.ArrayList;
 
-public class UserRepository implements IRepository<User>{
+public class UserRepository implements IUserRepository{
     @Override
     public ArrayList<User> all() {
         User u1 = new User("user", "123456");
@@ -21,11 +21,12 @@ public class UserRepository implements IRepository<User>{
     }
 
     @Override
-    public User create() {
-        return new User("xyz", "123456");
+    public User create(String username, String password) {
+        return new User(username, password);
     }
 
+    @Override
     public User getByUsername(String username) {
-        return new User("user", "123456");
+        return null;
     }
 }

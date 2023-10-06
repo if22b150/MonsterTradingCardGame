@@ -16,6 +16,7 @@ public class RouteConfig {
             new UserHandler(),
             new ArrayList<HttpMethod>(){{
                 add(HttpMethod.GET);
+                add(HttpMethod.POST);
             }}
         );
         // Define more routes

@@ -8,6 +8,4 @@ public interface IRepository<T> {
     ArrayList<T> all();
 
     T get(int id);
-
-    T create();
 }
