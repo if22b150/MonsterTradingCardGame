@@ -2,6 +2,7 @@ package at.technikum.server.routes;
 
 import at.technikum.server.HttpMethod;
 import at.technikum.server.Router;
+import at.technikum.server.handler.AuthHandler;
 import at.technikum.server.handler.UserHandler;
 
 import java.util.ArrayList;
@@ -19,7 +20,14 @@ public class RouteConfig {
                 add(HttpMethod.POST);
             }}
         );
-        // Define more routes
+
+        router.addRoute(
+                "/sessions",
+                new AuthHandler(),
+                new ArrayList<HttpMethod>(){{
+                    add(HttpMethod.POST);
+                }}
+        );
 
         return router;
 

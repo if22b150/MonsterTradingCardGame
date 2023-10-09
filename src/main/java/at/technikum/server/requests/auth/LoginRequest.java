@@ -1,11 +1,14 @@
-package at.technikum.server.requests.user;
+package at.technikum.server.requests.auth;
 
+import at.technikum.models.User;
 import at.technikum.repositories.user.IUserRepository;
 import at.technikum.repositories.user.UserRepository;
 import at.technikum.server.requests.ARequest;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class StoreUserRequest extends ARequest {
+import java.util.Objects;
+
+public class LoginRequest extends ARequest {
     private static final IUserRepository userRepository = new UserRepository();
     @JsonProperty("Username")
     private String username;
@@ -13,9 +16,15 @@ public class StoreUserRequest extends ARequest {
     @JsonProperty("Password")
     private String password;
 
-    public StoreUserRequest() {}
+    private User user;
 
-    public StoreUserRequest(String username, String password) {
+    public User getUser() {
+        return user;
+    }
+
+    public LoginRequest() {}
+
+    public LoginRequest(String username, String password) {
         super();
         this.username = username;
         this.password = password;
@@ -35,22 +44,23 @@ public class StoreUserRequest extends ARequest {
             valid = false;
         if(!validPassword())
             valid = false;
-        return valid;
+
+        if(!valid)
+            return false;
+
+        User loginUser = userRepository.getByUsername(username);
+        if(loginUser == null || !Objects.equals(loginUser.getPassword(), password)) {
+            generalMsg = "Credentials incorrect.";
+            return false;
+        } else
+            user = loginUser;
+
+        return true;
     }
 
     private boolean validUsername() {
-        if(     isNull("Username", username)
-                || isEmpty("Username", username)
-                || isTooShort("Username", username, 3) ) {
-            return false;
-        }
-
-        if(userRepository.getByUsername(username) != null) {
-            addError("Username", " already exists.");
-            return false;
-        }
-
-        return true;
+        return !isNull("Username", username)
+                && !isEmpty("Username", username);
     }
 
     private boolean validPassword() {
@@ -59,3 +69,4 @@ public class StoreUserRequest extends ARequest {
                 && !isTooShort("Password", password, 6);
     }
 }
+

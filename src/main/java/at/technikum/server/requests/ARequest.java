@@ -1,17 +1,26 @@
-package at.technikum.server.requests.user;
+package at.technikum.server.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public abstract class ARequest {
     private HashMap<String, ArrayList<String>> errors;
+
+    protected String generalMsg;
 
     public ARequest() {
         errors = new HashMap<>();
     }
 
     public String getErrorMessages() {
+        if(generalMsg != null)
+            return "{\"message\": \"" + generalMsg + "\"}";
+
         StringBuilder s = new StringBuilder().append("{\"message\": \"The given data was invalid.\",\"errors\": {");
         int cnt = 0;
         for(String key : errors.keySet()) {

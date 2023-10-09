@@ -1,4 +1,4 @@
-package at.technikum.controller;
+package at.technikum.server.controller;
 
 import at.technikum.mappers.UserMapper;
 import at.technikum.repositories.user.UserRepository;

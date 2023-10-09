@@ -4,6 +4,11 @@ package at.technikum.models;
 public class User extends AModel {
     static int idCounter = 1;
     private String username;
+
+    public String getPassword() {
+        return password;
+    }
+
     private String password;
     private int coins;
 //    private ArrayList<Card> stack;

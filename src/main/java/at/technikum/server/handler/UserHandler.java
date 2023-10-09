@@ -1,6 +1,6 @@
 package at.technikum.server.handler;
 
-import at.technikum.controller.UserController;
+import at.technikum.server.controller.UserController;
 import at.technikum.server.*;
 
 public class UserHandler extends AHandler{
@@ -26,7 +26,8 @@ public class UserHandler extends AHandler{
                 return this.userController.index();
             }
             case POST -> {
-                return this.userController.store(request.getBody());
+                // readValue of ObjectMapper can't handle null body, so I convert them to empty JSON
+                return this.userController.store(request.getBody() != null ? request.getBody() : "{}");
             }
         }
 
