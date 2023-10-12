@@ -71,4 +71,28 @@ public abstract class ARequest {
         addError(fieldName, " must consist of at least " + minLength + " characters");
         return true;
     }
+
+    protected boolean isMax(String fieldName, int value, int max) {
+        if(value <= max)
+            return true;
+
+        addError(fieldName, " must be <=  " + max);
+        return false;
+    }
+
+    protected boolean isMin(String fieldName, int value, int min) {
+        if(value >= min)
+            return true;
+
+        addError(fieldName, " must be >=  " + min);
+        return false;
+    }
+
+//    protected boolean isInt(String fieldName, Object value) {
+//        if(value == (int)value)
+//            return true;
+//
+//        addError(fieldName, " cannot be empty");
+//        return false;
+//    }
 }

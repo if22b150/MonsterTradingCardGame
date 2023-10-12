@@ -4,6 +4,8 @@ package at.technikum.models;
 public class User extends AModel {
     static int idCounter = 1;
     private String username;
+    private String bio;
+    private String image;
 
     public String getPassword() {
         return password;

@@ -1,4 +1,4 @@
-package at.technikum.server.requests.user;
+package at.technikum.server.requests;
 
 import at.technikum.repositories.user.IUserRepository;
 import at.technikum.repositories.user.UserRepository;

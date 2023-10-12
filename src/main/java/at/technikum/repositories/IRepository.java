@@ -1,4 +1,4 @@
-package at.technikum.repositories.user;
+package at.technikum.repositories;
 
 import at.technikum.models.User;
 

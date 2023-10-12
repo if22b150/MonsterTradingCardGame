@@ -1,4 +1,4 @@
-package at.technikum.mappers;
+package at.technikum.server.mappers;
 
 import at.technikum.models.User;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
@@ -29,6 +29,4 @@ public class UserMapper {
             return e.getMessage(); // or return an error message
         }
     }
-
-
 }
