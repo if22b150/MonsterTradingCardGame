@@ -1,9 +1,11 @@
 package at.technikum.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class User extends AModel {
-    static int idCounter = 1;
     private String username;
+    private String name;
     private String bio;
     private String image;
 
@@ -11,10 +13,14 @@ public class User extends AModel {
         return password;
     }
 
+    @JsonIgnore
     private String password;
     private int coins;
-//    private ArrayList<Card> stack;
-//    private ArrayList<Card> deck;
+
+    public User(String username) {
+        this.username = username;
+        this.coins = 20;
+    }
 
     public User(String username, String password) {
         this.username = username;
@@ -22,6 +28,21 @@ public class User extends AModel {
         this.coins = 20;
 //        this.stack = new ArrayList<Card>();
 //        this.deck = new ArrayList<Card>();
-        this.id = idCounter++;
+    }
+
+    public User(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.coins = 20;
+    }
+
+    public User(int id, String username, String name, String bio, String image, int coins) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.coins = coins;
+        this.bio = bio;
+        this.image = image;
     }
 }

@@ -12,17 +12,12 @@ import java.util.ArrayList;
 public class UserRepository implements IUserRepository{
     @Override
     public ArrayList<User> all() {
-        User u1 = new User("user", "123456");
-        User u2 = new User("user2", "1234567");
-        ArrayList<User> l = new ArrayList<User>();
-        l.add(u1);
-        l.add(u2);
-        return l;
+        return new ArrayList<>();
     }
 
     @Override
     public User get(int id) {
-        return new User("user", "123456");
+        return null;
     }
 
     @Override
@@ -37,19 +32,57 @@ public class UserRepository implements IUserRepository{
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                long id = generatedKeys.getLong(1); // Assuming "id" is a long integer.
+                int id = generatedKeys.getInt(1); // Assuming "id" is a long integer.
                 System.out.println("User created with ID: " + id);
+                return new User(id, username, password);
             } else {
                 throw new SQLException("Creating user failed, no ID obtained.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return new User(username, password);
     }
 
     @Override
     public User getByUsername(String username) {
-        return null;
+        String query = "SELECT * FROM users where username = ?;";
+        try {
+            PreparedStatement statement = Database.connect().prepareStatement(query);
+            statement.setString(1,username);
+            ResultSet result = statement.executeQuery();
+
+            User user = null;
+
+            while(result.next()) {
+                user = new User(
+                        result.getInt("id"),
+                        result.getString("username"),
+                        result.getString("name"),
+                        result.getString("bio"),
+                        result.getString("image"),
+                        result.getInt("coins")
+                );
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public User edit(String username, String name, String bio, String image) {
+        String query = "UPDATE users SET name = ?, bio = ?, image = ? where username = ?;";
+        try {
+            PreparedStatement statement = Database.connect().prepareStatement(query);
+            statement.setString(1,name);
+            statement.setString(2,bio);
+            statement.setString(3,image);
+            statement.setString(4,username);
+            statement.executeUpdate();
+
+            return this.getByUsername(username);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

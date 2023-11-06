@@ -19,6 +19,7 @@ public class RouteConfig {
             new ArrayList<HttpMethod>(){{
                 add(HttpMethod.GET);
                 add(HttpMethod.POST);
+                add(HttpMethod.PUT);
             }}
         );
 

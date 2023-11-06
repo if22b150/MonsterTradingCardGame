@@ -15,7 +15,11 @@ public class UserHandler extends AHandler{
             switch (request.getMethod()) {
                 case GET -> {
                     // normally we pass the id here, but curl script demands username...
-                    return this.userController.show(request.getPathPart(1));
+                    return this.userController.show(request.getPathPart(1, false));
+                }
+                case PUT -> {
+                    // normally we pass the id here, but curl script demands username...
+                    return this.userController.edit(request.getPathPart(1, false), request.getBody() != null ? request.getBody() : "{}");
                 }
             }
         }

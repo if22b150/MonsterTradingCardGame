@@ -39,6 +39,9 @@ public class Request {
     public String getPathPart(int index) {
         return (pathParts.isEmpty() || pathParts.size() <= index) ? null : "/" + pathParts.get(index);
     }
+    public String getPathPart(int index, boolean withSlash) {
+        return (pathParts.isEmpty() || pathParts.size() <= index) ? null : (withSlash ? "/" : "") + pathParts.get(index);
+    }
 
     public HttpMethod getMethod() {
         return method;

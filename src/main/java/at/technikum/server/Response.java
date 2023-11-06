@@ -14,7 +14,7 @@ public class Response {
         this.status = httpStatus.code;
         this.message = httpStatus.message;
         this.contentType = contentType.type;
-        this.content = content;
+        this.content = content != null ? content : "{}";
     }
 
     public String get() {
