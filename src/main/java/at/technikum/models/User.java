@@ -37,12 +37,13 @@ public class User extends AModel {
         this.coins = 20;
     }
 
-    public User(int id, String username, String name, String bio, String image, int coins) {
+    public User(int id, String username, String name, String bio, String image, int coins, String password) {
         this.id = id;
         this.username = username;
         this.name = name;
         this.coins = coins;
         this.bio = bio;
         this.image = image;
+        this.password = password;
     }
 }

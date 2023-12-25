@@ -1,0 +1,2 @@
+docker start mtcgdb
+docker exec -it mtcgdb psql -U postgres -h localhost -d mydb

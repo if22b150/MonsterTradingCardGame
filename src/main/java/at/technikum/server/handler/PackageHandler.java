@@ -1,10 +1,14 @@
 package at.technikum.server.handler;
 
+import at.technikum.repositories.session.SessionRepository;
+import at.technikum.repositories.user.UserRepository;
 import at.technikum.server.controller.PackageController;
 import at.technikum.server.*;
 
 public class PackageHandler extends AHandler{
     PackageController packageController = new PackageController();
+    private static final UserRepository userRepository  = new UserRepository();;
+    private static final SessionRepository sessionRepository = new SessionRepository();
 
     @Override
     public Response handleRequest(Request request) {

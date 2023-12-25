@@ -15,12 +15,8 @@ public class UserController {
     private static final UserRepository userRepository = new UserRepository();
 
     // normally we pass the id here, but curl script demands username...
-    public Response show(String username) {
-        User user = userRepository.getByUsername(username);
-        if(user == null)
-            return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, null);
-        else
-            return new Response(HttpStatus.OK, EContentType.JSON, UserMapper.userToJson(user));
+    public Response show(User user) {
+        return new Response(HttpStatus.OK, EContentType.JSON, UserMapper.userToJson(user));
     }
 
     public Response index() {

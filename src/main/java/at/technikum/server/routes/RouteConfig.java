@@ -4,6 +4,7 @@ import at.technikum.server.HttpMethod;
 import at.technikum.server.Router;
 import at.technikum.server.handler.AuthHandler;
 import at.technikum.server.handler.PackageHandler;
+import at.technikum.server.handler.SessionHandler;
 import at.technikum.server.handler.UserHandler;
 
 import java.util.ArrayList;
@@ -23,9 +24,10 @@ public class RouteConfig {
             }}
         );
 
+        // /sessions route
         router.addRoute(
                 "/sessions",
-                new AuthHandler(),
+                new SessionHandler(),
                 new ArrayList<HttpMethod>(){{
                     add(HttpMethod.POST);
                 }}

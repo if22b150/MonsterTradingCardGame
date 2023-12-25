@@ -1,9 +1,8 @@
 package at.technikum.utils.enums;
 
-public enum EElementType {
-    FIRE("fire"),
-    WATER("water"),
-    NORMAL("normal");
+public enum ECardType {
+    MONSTER("monster"),
+    SPELL("spell");
 
     /**
      * The type.
@@ -15,7 +14,7 @@ public enum EElementType {
      *
      * @param type The card type.
      */
-    EElementType(String type) {
+    ECardType(String type) {
         this.type = type;
     }
 }

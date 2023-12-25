@@ -60,7 +60,8 @@ public class UserRepository implements IUserRepository{
                         result.getString("name"),
                         result.getString("bio"),
                         result.getString("image"),
-                        result.getInt("coins")
+                        result.getInt("coins"),
+                        result.getString("password")
                 );
             }
             return user;

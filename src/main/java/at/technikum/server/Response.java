@@ -4,6 +4,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static at.technikum.server.mappers.UserMapper.objectMapper;
+
 public class Response {
     private int status;
     private String message;

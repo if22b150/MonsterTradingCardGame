@@ -1,10 +1,16 @@
 package at.technikum.server.handler;
 
+import at.technikum.models.Session;
+import at.technikum.models.User;
+import at.technikum.repositories.session.SessionRepository;
+import at.technikum.repositories.user.UserRepository;
 import at.technikum.server.controller.UserController;
 import at.technikum.server.*;
 
 public class UserHandler extends AHandler{
     UserController userController = new UserController();
+    private static final UserRepository userRepository  = new UserRepository();;
+    private static final SessionRepository sessionRepository = new SessionRepository();
 
     @Override
     public Response handleRequest(Request request) {
@@ -12,10 +18,24 @@ public class UserHandler extends AHandler{
             return new Response(HttpStatus.METHOD_NOT_ALLOWED, EContentType.JSON, "[]");
 
         if(request.getPathPart(1) != null) {
+            // check if user exists
+            User user = userRepository.getByUsername(request.getPathPart(1, false));
+            if(user == null)
+                return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, null);
+
+            // check if request is authorized
+            String authorization[] = request.getHeaderMap().getHeader("Authorization").split("Bearer ");
+            String token = null;
+            if(authorization.length < 2 || (token = authorization[1]).isEmpty())
+                return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, "[]");
+
+            if(!authorizeUser(user, token))
+                return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, "[]");
+
             switch (request.getMethod()) {
                 case GET -> {
                     // normally we pass the id here, but curl script demands username...
-                    return this.userController.show(request.getPathPart(1, false));
+                    return this.userController.show(user);
                 }
                 case PUT -> {
                     // normally we pass the id here, but curl script demands username...
@@ -26,7 +46,6 @@ public class UserHandler extends AHandler{
 
         switch (request.getMethod()) {
             case GET -> {
-                // normally we pass the id here, but curl script demands username...
                 return this.userController.index();
             }
             case POST -> {
@@ -36,5 +55,13 @@ public class UserHandler extends AHandler{
         }
 
         return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, "[]");
+    }
+
+    // 0 -> OK
+    // 1 -> Not Found
+    // 2 -> Unauthorized
+    public boolean authorizeUser(User user, String token) {
+        Session session = sessionRepository.getByUser(user.getId());
+        return token != null && session != null && token.equals(session.getToken());
     }
 }
