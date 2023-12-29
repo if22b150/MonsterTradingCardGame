@@ -7,6 +7,8 @@ import at.technikum.repositories.user.UserRepository;
 import at.technikum.server.controller.PackageController;
 import at.technikum.server.*;
 
+import java.util.Objects;
+
 public class PackageHandler extends AHandler{
     PackageController packageController = new PackageController();
     private static final UserRepository userRepository  = new UserRepository();;
@@ -33,7 +35,8 @@ public class PackageHandler extends AHandler{
         if(     authorization.length < 2
                 || (token = authorization[1]).isEmpty()
                 || (session = sessionRepository.getByToken(token)) == null
-                || (user = userRepository.get(session.getUserId())) == null)
+                || (user = userRepository.get(session.getUserId())) == null
+                || !Objects.equals(user.getUsername(), "admin"))
             return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, "[]");
 
         // readValue of ObjectMapper can't handle null body, so I convert them to empty JSON

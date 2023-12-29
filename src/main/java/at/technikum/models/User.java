@@ -46,4 +46,8 @@ public class User extends AModel {
         this.image = image;
         this.password = password;
     }
+
+    public String getUsername() {
+        return username;
+    }
 }
