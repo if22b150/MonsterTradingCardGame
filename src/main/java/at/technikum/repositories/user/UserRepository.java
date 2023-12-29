@@ -17,7 +17,29 @@ public class UserRepository implements IUserRepository{
 
     @Override
     public User get(int id) {
-        return null;
+        String query = "SELECT * FROM users where id = ?;";
+        try {
+            PreparedStatement statement = Database.connect().prepareStatement(query);
+            statement.setInt(1,id);
+            ResultSet result = statement.executeQuery();
+
+            User user = null;
+
+            while(result.next()) {
+                user = new User(
+                        result.getInt("id"),
+                        result.getString("username"),
+                        result.getString("name"),
+                        result.getString("bio"),
+                        result.getString("image"),
+                        result.getInt("coins"),
+                        result.getString("password")
+                );
+            }
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

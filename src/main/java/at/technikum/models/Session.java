@@ -18,4 +18,8 @@ public class Session extends AModel {
         this.userId = userId;
         this.token = token;
     }
+
+    public int getUserId() {
+        return userId;
+    }
 }

@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS transactions (
 
 CREATE TABLE IF NOT EXISTS cards (
     id SERIAL PRIMARY KEY,
-    public_id VARCHAR(255) NOT NULL,
+    public_id VARCHAR(255) NOT NULL UNIQUE,
     user_id INT,
     package_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
