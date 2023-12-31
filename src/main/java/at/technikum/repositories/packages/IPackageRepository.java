@@ -9,4 +9,6 @@ public interface IPackageRepository {
     Package create();
 
     ArrayList<ACard> getCards(int packageId);
+
+    int getAvailable();
 }

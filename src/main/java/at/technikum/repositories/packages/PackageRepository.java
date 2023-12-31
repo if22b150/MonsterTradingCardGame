@@ -74,4 +74,25 @@ public class PackageRepository implements IPackageRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public int getAvailable() {
+        String query = "SELECT DISTINCT p.id AS package_id FROM packages p RIGHT JOIN cards c ON p.id = c.package_id WHERE c.user_id IS NULL;";
+        try {
+            PreparedStatement statement = Database.connect().prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+
+            ArrayList<Integer> packageIds = new ArrayList<Integer>();
+
+            while(result.next()) {
+                packageIds.add(result.getInt("package_id"));
+            }
+            if(packageIds.isEmpty())
+                return -1;
+            System.out.println(packageIds);
+            return packageIds.get(0);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
