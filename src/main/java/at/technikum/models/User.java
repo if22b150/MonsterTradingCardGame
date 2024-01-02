@@ -6,7 +6,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class User extends AModel {
     private String username;
     private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
     private String bio;
+
+    public String getImage() {
+        return image;
+    }
+
     private String image;
 
     public String getPassword() {
@@ -15,6 +29,11 @@ public class User extends AModel {
 
     @JsonIgnore
     private String password;
+
+    public int getCoins() {
+        return coins;
+    }
+
     private int coins;
 
     public User(String username) {

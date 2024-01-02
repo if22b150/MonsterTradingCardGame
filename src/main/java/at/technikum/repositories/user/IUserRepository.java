@@ -7,5 +7,5 @@ public interface IUserRepository extends IRepository<User> {
     User create(String username, String password);
     User getByUsername(String username);
 
-    User edit(String username, String name, String bio, String image);
+    User edit(String username, String name, String bio, String image, int coins);
 }

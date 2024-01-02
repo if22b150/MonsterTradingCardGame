@@ -93,14 +93,15 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
-    public User edit(String username, String name, String bio, String image) {
-        String query = "UPDATE users SET name = ?, bio = ?, image = ? where username = ?;";
+    public User edit(String username, String name, String bio, String image, int coins) {
+        String query = "UPDATE users SET name = ?, bio = ?, image = ?, coins = ? where username = ?;";
         try {
             PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setString(1,name);
             statement.setString(2,bio);
             statement.setString(3,image);
-            statement.setString(4,username);
+            statement.setInt(4,coins);
+            statement.setString(5,username);
             statement.executeUpdate();
 
             return this.getByUsername(username);

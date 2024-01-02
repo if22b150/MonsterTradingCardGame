@@ -54,6 +54,6 @@ public class UserController {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return new Response(HttpStatus.CREATED, EContentType.JSON, UserMapper.userToJson(userRepository.edit(username, userRequest.getName(), userRequest.getBio(), userRequest.getImage())));
+        return new Response(HttpStatus.CREATED, EContentType.JSON, UserMapper.userToJson(userRepository.edit(username, userRequest.getName(), userRequest.getBio(), userRequest.getImage(), user.getCoins())));
     }
 }
