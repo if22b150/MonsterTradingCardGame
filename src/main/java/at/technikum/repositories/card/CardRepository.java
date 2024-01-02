@@ -1,20 +1,13 @@
 package at.technikum.repositories.card;
 
 import at.technikum.database.Database;
-import at.technikum.models.Session;
-import at.technikum.models.User;
 import at.technikum.models.card.ACard;
 import at.technikum.models.card.MonsterCard;
 import at.technikum.models.card.SpellCard;
-import at.technikum.repositories.user.IUserRepository;
 import at.technikum.utils.enums.ECardType;
 import at.technikum.utils.enums.EElementType;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.sql.*;
 
 public class CardRepository implements ICardRepository {
 //    @Override
@@ -32,9 +25,10 @@ public class CardRepository implements ICardRepository {
 
     @Override
     public ACard create(String publicId, String name, int damage, ECardType cardType, EElementType elementType, int packageId) {
+        PreparedStatement statement = null;
         String query = "INSERT INTO cards (public_id, name, damage, card_type, element_type, package_id) VALUES (?,?,?,?,?,?);";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            statement = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1,publicId);
             statement.setString(2,name);
             statement.setInt(3,damage);

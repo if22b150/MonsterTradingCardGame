@@ -19,7 +19,7 @@ public class UserRepository implements IUserRepository{
     public User get(int id) {
         String query = "SELECT * FROM users where id = ?;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setInt(1,id);
             ResultSet result = statement.executeQuery();
 
@@ -46,7 +46,7 @@ public class UserRepository implements IUserRepository{
     public User create(String username, String password) {
         String query = "INSERT INTO users (username,password,coins) VALUES (?,?,?);";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1,username);
             statement.setString(2,password);
             statement.setInt(3,20);
@@ -69,7 +69,7 @@ public class UserRepository implements IUserRepository{
     public User getByUsername(String username) {
         String query = "SELECT * FROM users where username = ?;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setString(1,username);
             ResultSet result = statement.executeQuery();
 
@@ -96,7 +96,7 @@ public class UserRepository implements IUserRepository{
     public User edit(String username, String name, String bio, String image) {
         String query = "UPDATE users SET name = ?, bio = ?, image = ? where username = ?;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setString(1,name);
             statement.setString(2,bio);
             statement.setString(3,image);

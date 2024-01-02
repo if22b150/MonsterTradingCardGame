@@ -2,7 +2,6 @@ package at.technikum.repositories.packages;
 
 import at.technikum.database.Database;
 import at.technikum.models.Package;
-import at.technikum.models.User;
 import at.technikum.models.card.ACard;
 import at.technikum.models.card.MonsterCard;
 import at.technikum.models.card.SpellCard;
@@ -21,7 +20,7 @@ public class PackageRepository implements IPackageRepository {
     public Package create() {
         String query = "INSERT INTO packages DEFAULT VALUES;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.executeUpdate();
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -41,7 +40,7 @@ public class PackageRepository implements IPackageRepository {
     public ArrayList<ACard> getCards(int packageId) {
         String query = "SELECT * FROM cards where package_id = ?;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setInt(1,packageId);
             ResultSet result = statement.executeQuery();
 
@@ -79,7 +78,7 @@ public class PackageRepository implements IPackageRepository {
     public int getAvailable() {
         String query = "SELECT DISTINCT p.id AS package_id FROM packages p RIGHT JOIN cards c ON p.id = c.package_id WHERE c.user_id IS NULL;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
             ResultSet result = statement.executeQuery();
 
             ArrayList<Integer> packageIds = new ArrayList<Integer>();

@@ -1,5 +1,7 @@
 package at.technikum.server;
 
+import at.technikum.database.Database;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -45,6 +47,7 @@ public final class Server implements AutoCloseable {
      */
     @Override
     public void close() {
+        Database.closeConnection();
         executorService.shutdown();
         logger.info("http-server stopped.");
     }

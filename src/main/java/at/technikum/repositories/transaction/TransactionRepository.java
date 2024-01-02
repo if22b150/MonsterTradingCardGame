@@ -20,7 +20,7 @@ public class TransactionRepository implements ITransactionRepository {
         Transaction transaction = null;
         String query = "INSERT INTO transactions (user_id, package_id) VALUES (?,?);";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1,userId);
             statement.setInt(2,packageId);
             statement.executeUpdate();
@@ -42,7 +42,7 @@ public class TransactionRepository implements ITransactionRepository {
         for(ACard card: cardsOfPackage) {
             String updateQuery = "UPDATE cards SET user_id = ? WHERE id = ?;";
             try {
-                PreparedStatement updateStatement = Database.connect().prepareStatement(updateQuery);
+                PreparedStatement updateStatement = Database.getConnection().prepareStatement(updateQuery);
                 updateStatement.setInt(1,userId);
                 updateStatement.setInt(2,card.getId());
                 updateStatement.executeUpdate();

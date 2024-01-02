@@ -2,7 +2,6 @@ package at.technikum.repositories.session;
 
 import at.technikum.database.Database;
 import at.technikum.models.Session;
-import at.technikum.models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +13,7 @@ public class SessionRepository implements ISessionRepository {
     public Session create(int userId, String token) {
         String query = "INSERT INTO sessions (user_id,token) VALUES (?,?);";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1,userId);
             statement.setString(2,token);
             statement.executeUpdate();
@@ -36,7 +35,7 @@ public class SessionRepository implements ISessionRepository {
     public Session getByUser(int userId) {
         String query = "SELECT * FROM sessions where user_id = ?;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setInt(1,userId);
             ResultSet result = statement.executeQuery();
 
@@ -59,7 +58,7 @@ public class SessionRepository implements ISessionRepository {
     public Session getByToken(String token) {
         String query = "SELECT * FROM sessions where token = ?;";
         try {
-            PreparedStatement statement = Database.connect().prepareStatement(query);
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
             statement.setString(1,token);
             ResultSet result = statement.executeQuery();
 
