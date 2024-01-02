@@ -15,22 +15,22 @@ public class UserHandler extends AHandler{
     @Override
     public Response handleRequest(Request request) {
         if(!this.allowedMethods.contains(request.getMethod()))
-            return new Response(HttpStatus.METHOD_NOT_ALLOWED, EContentType.JSON, "[]");
+            return new Response(HttpStatus.METHOD_NOT_ALLOWED, EContentType.JSON, HttpStatus.METHOD_NOT_ALLOWED.message);
 
         if(request.getPathPart(1) != null) {
             // check if user exists
             User user = userRepository.getByUsername(request.getPathPart(1, false));
             if(user == null)
-                return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, null);
+                return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, HttpStatus.NOT_FOUND.message);
 
             // check if request is authorized
             String authorization[] = request.getHeaderMap().getHeader("Authorization").split("Bearer ");
             String token = null;
             if(authorization.length < 2 || (token = authorization[1]).isEmpty())
-                return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, "[]");
+                return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, HttpStatus.UNAUTHORIZED.message);
 
             if(!authorizeUser(user, token))
-                return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, "[]");
+                return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, HttpStatus.UNAUTHORIZED.message);
 
             switch (request.getMethod()) {
                 case GET -> {
@@ -54,12 +54,9 @@ public class UserHandler extends AHandler{
             }
         }
 
-        return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, "[]");
+        return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, HttpStatus.NOT_FOUND.message);
     }
 
-    // 0 -> OK
-    // 1 -> Not Found
-    // 2 -> Unauthorized
     public boolean authorizeUser(User user, String token) {
         Session session = sessionRepository.getByUser(user.getId());
         return token != null && session != null && token.equals(session.getToken());

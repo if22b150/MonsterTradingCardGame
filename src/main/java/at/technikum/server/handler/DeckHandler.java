@@ -3,6 +3,8 @@ package at.technikum.server.handler;
 import at.technikum.server.*;
 import at.technikum.server.controller.DeckController;
 
+import java.util.Objects;
+
 public class DeckHandler extends AHandler{
     DeckController deckController = new DeckController();
 
@@ -21,6 +23,6 @@ public class DeckHandler extends AHandler{
         if (request.getMethod().equals(HttpMethod.PUT))
             return this.deckController.setDeck(request.getBody() != null ? request.getBody() : "{}", requestUser);
         else
-            return this.deckController.index(requestUser, request.getParam("format") == "plain");
+            return this.deckController.index(requestUser, Objects.equals(request.getParam("format"), "plain"));
     }
 }

@@ -41,7 +41,7 @@ public class UserController {
     public Response edit(String username, String body) {
         User user = userRepository.getByUsername(username);
         if(user == null)
-            return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, null);
+            return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, HttpStatus.NOT_FOUND.message);
 
         ObjectMapper objectMapper = new ObjectMapper();
         UpdateUserRequest userRequest;

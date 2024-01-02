@@ -9,8 +9,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AuthController {
-//    private static final UserRepository userRepository = new UserRepository();
-
     public Response login(String body) {
         ObjectMapper objectMapper = new ObjectMapper();
         LoginRequest loginUser;
