@@ -46,6 +46,23 @@ public class RouteConfig {
                 }}
         );
 
+        router.addRoute(
+                "/cards",
+                new CardHandler(),
+                new ArrayList<HttpMethod>(){{
+                    add(HttpMethod.GET);
+                }}
+        );
+
+        router.addRoute(
+                "/deck",
+                new DeckHandler(),
+                new ArrayList<HttpMethod>(){{
+                    add(HttpMethod.GET);
+                    add(HttpMethod.PUT);
+                }}
+        );
+
         return router;
 
     }

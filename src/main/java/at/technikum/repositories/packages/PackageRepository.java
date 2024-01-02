@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 public class PackageRepository implements IPackageRepository {
@@ -89,6 +90,7 @@ public class PackageRepository implements IPackageRepository {
             if(packageIds.isEmpty())
                 return -1;
             System.out.println(packageIds);
+            Collections.sort(packageIds);
             return packageIds.get(0);
         } catch (SQLException e) {
             throw new RuntimeException(e);

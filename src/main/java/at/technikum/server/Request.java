@@ -1,14 +1,16 @@
 package at.technikum.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Request {
     private HttpMethod method;
     private String urlContent;
     private String pathname;
     private List<String> pathParts;
-    private String params;
+    private Map<String, String> params;
     private HeaderMap headerMap = new HeaderMap();
     private String body;
 
@@ -29,7 +31,8 @@ public class Request {
                 this.pathParts.add(part);
             }
         }
-        this.params = hasParams && urlParts.length > 1 ? urlParts[1] : null;
+
+        this.params = (hasParams && urlParts.length > 1) ? getParametersMap(urlParts[1]) : new HashMap<>();
     }
 
     public String getServiceRoute() {
@@ -42,6 +45,23 @@ public class Request {
     public String getPathPart(int index, boolean withSlash) {
         return (pathParts.isEmpty() || pathParts.size() <= index) ? null : (withSlash ? "/" : "") + pathParts.get(index);
     }
+    private Map<String, String> getParametersMap(String queryString) {
+        Map<String, String> parameters = new HashMap<>();
+
+        if (queryString != null && !queryString.isEmpty()) {
+            String[] keyValuePairs = queryString.split("&");
+
+            for (String pair : keyValuePairs) {
+                String[] entry = pair.split("=");
+                String key = entry[0];
+                String value = entry.length > 1 ? entry[1] : null;
+
+                parameters.put(key, value);
+            }
+        }
+
+        return parameters;
+    }
 
     public HttpMethod getMethod() {
         return method;
@@ -51,8 +71,12 @@ public class Request {
         return pathname;
     }
 
-    public String getParams() {
+    public Map<String, String> getParams() {
         return params;
+    }
+
+    public String getParam(String key) {
+        return params.get(key);
     }
 
     public HeaderMap getHeaderMap() {

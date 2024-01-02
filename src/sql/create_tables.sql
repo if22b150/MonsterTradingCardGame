@@ -36,7 +36,13 @@ CREATE TABLE IF NOT EXISTS cards (
     damage INT NOT NULL,
     card_type VARCHAR(255) NOT NULL,
     element_type VARCHAR(255) NOT NULL,
+    deck BOOLEAN DEFAULT false,
     FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (package_id) REFERENCES packages(id)
 );
 
+
+
+
+
+delete from cards; delete from transactions; delete from packages; delete from sessions; delete from users;
