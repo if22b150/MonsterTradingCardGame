@@ -1,6 +1,7 @@
 package at.technikum.server;
 
 import at.technikum.server.handler.IHandler;
+import at.technikum.server.middlewares.IMiddleware;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class RequestHandler implements Runnable, AutoCloseable {
     }
 
     private void handleRequest() throws IOException {
-        Response response;
+        Response response = null;
         Request request = new RequestBuilder().buildRequest(this.bufferedReader);
 
         // Log the resolved route
@@ -50,20 +51,33 @@ public class RequestHandler implements Runnable, AutoCloseable {
             response = new Response(
                     HttpStatus.BAD_REQUEST,
                     EContentType.JSON,
-                    "[]"
+                    HttpStatus.BAD_REQUEST.message
             );
         } else {
 //            response = this.router.resolve(request.getServiceRoute()).handleRequest(request);
             IHandler handler = this.router.resolve(resolvedRoute);
             if (handler != null) {
-                response = handler.handleRequest(request);
+                if(!handler.getAllowedMethods().contains(request.getMethod())) {
+                    response = new Response(HttpStatus.METHOD_NOT_ALLOWED, EContentType.JSON, HttpStatus.METHOD_NOT_ALLOWED.message);
+                } else if (!handler.getMiddlewares().isEmpty()) {
+                    for(IMiddleware middleware : handler.getMiddlewares().get(request.getMethod())) {
+                        response = middleware.handle(request);
+                        if(response != null)
+                            break;
+                    }
+                }
+
+                // everything passed
+                if(response == null)
+                    response = handler.handleRequest(request);
+
             } else {
                 // Log that the handler is null
                 logger.warning("Handler not found for route: " + resolvedRoute);
                 response = new Response(
                         HttpStatus.NOT_FOUND,
                         EContentType.JSON,
-                        "[\"Route not found\"]"
+                        HttpStatus.NOT_FOUND.message
                 );
             }
         }

@@ -15,25 +15,12 @@ public class Router {
      * @param route   The route to be added.
      * @param handler The handler associated with the route.
      */
-    public void addRoute(String route, IHandler handler, ArrayList<HttpMethod> allowedMethods) {
+    public void addRoute(String route, IHandler handler, ArrayList<HttpRoute> routes) {
         if (route != null && handler != null) {
-            handler.setAllowedMethods(allowedMethods);
+            handler.setRoutes(routes);
             routeRegistry.put(route, handler);
         } else {
             throw new IllegalArgumentException("Route and handler must not be null.");
-        }
-    }
-
-    /**
-     * Removes a route and its associated handler from the router.
-     *
-     * @param route The route to be removed.
-     */
-    public void removeRoute(String route) {
-        if (route != null) {
-            routeRegistry.remove(route);
-        } else {
-            throw new IllegalArgumentException("Route must not be null.");
         }
     }
 
@@ -46,6 +33,4 @@ public class Router {
     public IHandler resolve(String route) {
         return routeRegistry.get(route);
     }
-
-    // You can add additional methods as needed, such as listing all registered routes.
 }

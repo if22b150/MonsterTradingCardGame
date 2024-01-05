@@ -14,9 +14,6 @@ public class UserHandler extends AHandler{
 
     @Override
     public Response handleRequest(Request request) {
-        if(!this.allowedMethods.contains(request.getMethod()))
-            return new Response(HttpStatus.METHOD_NOT_ALLOWED, EContentType.JSON, HttpStatus.METHOD_NOT_ALLOWED.message);
-
         if(request.getPathPart(1) != null) {
             // check if user exists
             User user = userRepository.getByUsername(request.getPathPart(1, false));

@@ -1,8 +1,10 @@
 package at.technikum.server.routes;
 
 import at.technikum.server.HttpMethod;
+import at.technikum.server.HttpRoute;
 import at.technikum.server.Router;
 import at.technikum.server.handler.*;
+import at.technikum.server.middlewares.AuthMiddleware;
 
 import java.util.ArrayList;
 
@@ -14,10 +16,10 @@ public class RouteConfig {
         router.addRoute(
             "/users",
             new UserHandler(),
-            new ArrayList<HttpMethod>(){{
-                add(HttpMethod.GET);
-                add(HttpMethod.POST);
-                add(HttpMethod.PUT);
+            new ArrayList<HttpRoute>(){{
+                add(new HttpRoute(HttpMethod.GET, null));
+                add(new HttpRoute(HttpMethod.POST, null));
+                add(new HttpRoute(HttpMethod.PUT, null));
             }}
         );
 
@@ -25,57 +27,106 @@ public class RouteConfig {
         router.addRoute(
                 "/sessions",
                 new SessionHandler(),
-                new ArrayList<HttpMethod>(){{
-                    add(HttpMethod.POST);
+                new ArrayList<HttpRoute>(){{
+                    add(new HttpRoute(HttpMethod.POST, null));
                 }}
         );
 
         router.addRoute(
                 "/packages",
                 new PackageHandler(),
-                new ArrayList<HttpMethod>(){{
-                    add(HttpMethod.POST);
+                new ArrayList<HttpRoute>(){{
+                    add(
+                        new HttpRoute(
+                            HttpMethod.POST,
+                            new ArrayList<>(){{
+                                add(
+                                    new AuthMiddleware(
+                                        new ArrayList<>(){{
+                                            add("admin");
+                                        }}
+                                    )
+                                );
+                            }}
+                        )
+                    );
                 }}
         );
 
         router.addRoute(
                 "/transactions",
                 new TransactionHandler(),
-                new ArrayList<HttpMethod>(){{
-                    add(HttpMethod.POST);
+                new ArrayList<HttpRoute>(){{
+                    add(new HttpRoute(HttpMethod.POST, null));
                 }}
         );
 
         router.addRoute(
                 "/cards",
                 new CardHandler(),
-                new ArrayList<HttpMethod>(){{
-                    add(HttpMethod.GET);
+                new ArrayList<HttpRoute>(){{
+                    add(
+                        new HttpRoute(
+                            HttpMethod.GET,
+                            new ArrayList<>(){{
+                                add(new AuthMiddleware());
+                            }}
+                        )
+                    );
                 }}
         );
 
         router.addRoute(
                 "/deck",
                 new DeckHandler(),
-                new ArrayList<HttpMethod>(){{
-                    add(HttpMethod.GET);
-                    add(HttpMethod.PUT);
+                new ArrayList<HttpRoute>(){{
+                    add(
+                        new HttpRoute(
+                            HttpMethod.GET,
+                            new ArrayList<>(){{
+                                add(new AuthMiddleware());
+                            }}
+                        )
+                    );
+                    add(
+                        new HttpRoute(
+                            HttpMethod.PUT,
+                            new ArrayList<>(){{
+                                add(new AuthMiddleware());
+                            }}
+                        )
+                    );
                 }}
         );
 
         router.addRoute(
                 "/stats",
                 new StatHandler(),
-                new ArrayList<HttpMethod>(){{
-                    add(HttpMethod.GET);
+                new ArrayList<HttpRoute>(){{
+                    add(new HttpRoute(HttpMethod.GET, null));
                 }}
         );
 
         router.addRoute(
                 "/scoreboard",
-                new StatHandler(),
-                new ArrayList<HttpMethod>(){{
-                    add(HttpMethod.GET);
+                new ScoreboardHandler(),
+                new ArrayList<HttpRoute>(){{
+                    add(new HttpRoute(HttpMethod.GET, null));
+                }}
+        );
+
+        router.addRoute(
+                "/battles",
+                new BattleHandler(),
+                new ArrayList<HttpRoute>(){{
+                    add(
+                        new HttpRoute(
+                            HttpMethod.POST,
+                            new ArrayList<>(){{
+                                add(new AuthMiddleware());
+                            }}
+                        )
+                    );
                 }}
         );
 

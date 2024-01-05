@@ -4,18 +4,17 @@ import at.technikum.server.EContentType;
 import at.technikum.server.HttpStatus;
 import at.technikum.server.Request;
 import at.technikum.server.Response;
-import at.technikum.server.controller.CardController;
+import at.technikum.server.controller.BattleController;
 
-public class CardHandler extends AHandler{
-    CardController cardController = new CardController();
+public class BattleHandler extends AHandler{
+    BattleController battleController = new BattleController();
 
     @Override
     public Response handleRequest(Request request) {
-        // CardHandler handles only GET route
-        if(request.getPathPart(1) != null) {
+        // BattleHandler handles only POST route
+        if(request.getPathPart(1) != null)
             return new Response(HttpStatus.NOT_FOUND, EContentType.JSON, HttpStatus.NOT_FOUND.message);
-        }
 
-        return this.cardController.index(requestUser);
+        return this.battleController.store(requestUser);
     }
 }
