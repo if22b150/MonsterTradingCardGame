@@ -18,4 +18,6 @@ public interface ICardRepository {
     ArrayList<ACard> getUserDeck(int userId);
 
     ACard setDeck(int id, boolean deck);
+
+
 }

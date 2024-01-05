@@ -13,6 +13,7 @@ public enum HttpStatus {
     FORBIDDEN(403, "[\"Forbidden\"]"),
     NOT_FOUND(404, "[\"Not Found\"]"),
     METHOD_NOT_ALLOWED(405, "[\"Method Not Allowed\"]"),
+    REQUEST_TIMEOUT(408, "[\"Request Timed Out\"]"),
     CONFLICT(409, "[\"Conflict\"]"),
     UNPROCESSABLE_ENTITY(422, "[\"Unprocessable Entity\"]"),
     INTERNAL_SERVER_ERROR(500, "[\"Internal Server Error\"]"),

@@ -41,7 +41,24 @@ CREATE TABLE IF NOT EXISTS cards (
     FOREIGN KEY (package_id) REFERENCES packages(id)
 );
 
+CREATE TABLE IF NOT EXISTS battles (
+    id SERIAL PRIMARY KEY,
+    user_1_id INT NOT NULL,
+    user_2_id INT NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_1_id) REFERENCES users(id),
+    FOREIGN KEY (user_2_id) REFERENCES users(id)
+);
 
+CREATE TABLE IF NOT EXISTS battle_rounds (
+    id SERIAL PRIMARY KEY,
+    battle_id INT NOT NULL,
+    card_user_1_id INT NOT NULL,
+    card_user_2_id INT NOT NULL,
+    FOREIGN KEY (battle_id) REFERENCES battles(id),
+    FOREIGN KEY (card_user_1_id) REFERENCES cards(id),
+    FOREIGN KEY (card_user_2_id) REFERENCES cards(id)
+);
 
 
 

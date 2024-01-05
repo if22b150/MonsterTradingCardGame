@@ -1,10 +1,26 @@
 package at.technikum.models.card;
 
 import at.technikum.models.AModel;
+import at.technikum.utils.enums.ECardType;
 import at.technikum.utils.enums.EElementType;
 
 public abstract class ACard extends AModel {
+    public String getPublicId() {
+        return publicId;
+    }
+
     protected String publicId;
+
+    public ECardType getType() {
+        return type;
+    }
+
+    protected ECardType type;
+
+    public String getName() {
+        return name;
+    }
+
     protected String name;
     protected final int damage;
     protected EElementType elementType;

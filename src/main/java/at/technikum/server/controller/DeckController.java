@@ -1,6 +1,5 @@
 package at.technikum.server.controller;
 
-import at.technikum.models.Package;
 import at.technikum.models.User;
 import at.technikum.models.card.ACard;
 import at.technikum.repositories.card.CardRepository;
@@ -9,10 +8,6 @@ import at.technikum.server.EContentType;
 import at.technikum.server.HttpStatus;
 import at.technikum.server.Response;
 import at.technikum.server.mappers.CardMapper;
-import at.technikum.server.requests.SetDeckRequest;
-import at.technikum.server.requests.StoreCardRequest;
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -47,8 +42,12 @@ public class DeckController {
             throw new RuntimeException(e);
         }
 
+        // unset old deck
+        for(ACard card : cardRepository.getUserDeck(user.getId())) {
+            cardRepository.setDeck(card.getId(), false);
+        }
         // set deck
-        for(ACard card: cards) {
+        for(ACard card : cards) {
             cardRepository.setDeck(card.getId(), true);
         }
 

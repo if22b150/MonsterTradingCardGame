@@ -61,7 +61,7 @@ public class RequestHandler implements Runnable, AutoCloseable {
                     response = new Response(HttpStatus.METHOD_NOT_ALLOWED, EContentType.JSON, HttpStatus.METHOD_NOT_ALLOWED.message);
                 } else if (!handler.getMiddlewares().isEmpty()) {
                     for(IMiddleware middleware : handler.getMiddlewares().get(request.getMethod())) {
-                        response = middleware.handle(request);
+                        response = middleware.handle(request, handler);
                         if(response != null)
                             break;
                     }

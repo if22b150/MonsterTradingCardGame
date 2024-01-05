@@ -41,6 +41,9 @@ public abstract class AHandler implements IHandler {
     public void setRoutes(ArrayList<HttpRoute> routes) {
         this.routes = routes;
     }
+    public void setRequestUser(User user) {
+        this.requestUser = user;
+    }
 
     public boolean isAuthorized(Request request)  {
         // check if request has authorization header

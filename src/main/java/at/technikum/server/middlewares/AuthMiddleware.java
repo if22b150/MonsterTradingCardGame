@@ -10,6 +10,7 @@ import at.technikum.server.EContentType;
 import at.technikum.server.HttpStatus;
 import at.technikum.server.Request;
 import at.technikum.server.Response;
+import at.technikum.server.handler.IHandler;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class AuthMiddleware implements IMiddleware {
     }
 
     @Override
-    public Response handle(Request request) {
+    public Response handle(Request request, IHandler handler) {
         Response unauthorizedResponse = new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, HttpStatus.UNAUTHORIZED.message);
 
         if(request.getHeaderMap().getHeader("Authorization") == null)
@@ -44,6 +45,7 @@ public class AuthMiddleware implements IMiddleware {
                 || (user = userRepository.get(session.getUserId())) == null)
             return unauthorizedResponse;
 
+        handler.setRequestUser(user);
         return this.allowedUsers == null || this.allowedUsers.contains(user.getUsername()) ? null : unauthorizedResponse;
     }
 }
