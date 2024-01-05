@@ -63,6 +63,14 @@ public class RouteConfig {
                 }}
         );
 
+        router.addRoute(
+                "/stats",
+                new StatHandler(),
+                new ArrayList<HttpMethod>(){{
+                    add(HttpMethod.GET);
+                }}
+        );
+
         return router;
 
     }
