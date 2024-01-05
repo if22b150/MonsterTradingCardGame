@@ -71,6 +71,14 @@ public class RouteConfig {
                 }}
         );
 
+        router.addRoute(
+                "/scoreboard",
+                new StatHandler(),
+                new ArrayList<HttpMethod>(){{
+                    add(HttpMethod.GET);
+                }}
+        );
+
         return router;
 
     }
