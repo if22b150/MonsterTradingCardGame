@@ -4,6 +4,7 @@ import at.technikum.BattleLogic;
 import at.technikum.models.Battle;
 import at.technikum.models.BattleRound;
 import at.technikum.models.User;
+import at.technikum.models.UserStat;
 import at.technikum.models.card.ACard;
 import at.technikum.repositories.battle.BattleRepository;
 import at.technikum.repositories.battle.IBattleRepository;
@@ -13,6 +14,8 @@ import at.technikum.repositories.trade.ITradeRepository;
 import at.technikum.repositories.trade.TradeRepository;
 import at.technikum.repositories.user.IUserRepository;
 import at.technikum.repositories.user.UserRepository;
+import at.technikum.repositories.userStat.IUserStatRepository;
+import at.technikum.repositories.userStat.UserStatRepository;
 import at.technikum.server.EContentType;
 import at.technikum.server.HttpStatus;
 import at.technikum.server.Response;
@@ -25,12 +28,15 @@ public class BattleController {
     private static final IBattleRepository battleRepository = new BattleRepository();
     private static final ICardRepository cardRepository = new CardRepository();
     private static final ITradeRepository tradeRepository = new TradeRepository();
+    private static final IUserStatRepository userStatRepository = new UserStatRepository();
 
     public Response store(int user1Id, int user2Id) {
         User user1 = userRepository.get(user1Id);
         User user2 = userRepository.get(user2Id);
 
         Battle battle = battleRepository.store(user1Id, user2Id, "IN_PROGRESS");
+
+        User battleWinner = null;
 
         // fetch current decks
         ArrayList<ACard> user1Deck = cardRepository.getUserDeck(user1Id);
@@ -44,11 +50,14 @@ public class BattleController {
 
             // if deck of one user is empty, game is over
             if(user1Deck.isEmpty() || user2Deck.isEmpty()) {
+                battleWinner = user1Deck.isEmpty() ? user2 : user1;
+
                 battleRepository.setStatus(battle.getId(), "FINISHED");
                 battleRepository.setWinnerAndLoserUserId(battle.getId(), user1Deck.isEmpty() ? user2.getId() : user1.getId(), user1Deck.isEmpty() ? user1.getId() : user2.getId());
 
                 System.out.println("----------------------------------------");
-                System.out.println("!!! WINNER is " + (user1Deck.isEmpty() ? user1.getUsername() : user2.getUsername()) + " !!!");
+                System.out.println("!!! WINNER is " + battleWinner.getUsername() + " !!!");
+
 
                 break;
             }
@@ -96,6 +105,38 @@ public class BattleController {
 
             round++;
         }
+
+        // stat calculation
+        int eloUser1 = 100;
+        int eloUser2 = 100;
+        int gamesPlayedUser1 = 1;
+        int gamesPlayedUser2 = 1;
+
+        UserStat currentStatUser1 = userStatRepository.getByUserId(user1Id);
+        UserStat currentStatUser2 = userStatRepository.getByUserId(user2Id);
+        if(currentStatUser1 != null) {
+            gamesPlayedUser1 = currentStatUser1.getGamesPlayed();
+            gamesPlayedUser1++;
+            eloUser1 = currentStatUser1.getElo();
+        }
+        if(currentStatUser2 != null) {
+            gamesPlayedUser2 = currentStatUser2.getGamesPlayed();
+            gamesPlayedUser2++;
+            eloUser2 = currentStatUser2.getElo();
+        }
+
+        if(battleWinner != null) {
+            if(battleWinner.getId() == user1Id) {
+                eloUser1 += 3;
+                eloUser2 -= 5;
+            } else {
+                eloUser1 -= 5;
+                eloUser2 += 3;
+            }
+        }
+
+        userStatRepository.createOrUpdate(user1Id,gamesPlayedUser1,eloUser1);
+        userStatRepository.createOrUpdate(user2Id,gamesPlayedUser2,eloUser2);
 
         System.out.println("----------------------------------------\nBATTLE OVER\n----------------------------------------");
 

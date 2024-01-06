@@ -85,5 +85,13 @@ CREATE TABLE IF NOT EXISTS card_trades (
     FOREIGN KEY (to_user_card_id) REFERENCES cards(id)
 );
 
+CREATE TABLE IF NOT EXISTS user_stats (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    games_played INT NOT NULL,
+    elo INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
 
-delete from card_trades; delete from battle_rounds; delete from battles; delete from cards; delete from transactions; delete from packages; delete from sessions; delete from users;
+
+delete from user_stats; delete from card_trades; delete from battle_rounds; delete from battles; delete from cards; delete from transactions; delete from packages; delete from sessions; delete from users;
