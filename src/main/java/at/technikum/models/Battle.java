@@ -17,6 +17,9 @@ public class Battle extends AModel {
     int user2Id;
     String status;
 
+    int winnerUserId;
+    int loserUserId;
+
     public Battle(int id, int user1Id, int user2Id, String status) {
         this.id = id;
         this.user1Id = user1Id;

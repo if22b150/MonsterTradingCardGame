@@ -1,5 +1,6 @@
 package at.technikum.server.controller;
 
+import at.technikum.utils.CardName;
 import at.technikum.models.Package;
 import at.technikum.models.card.ACard;
 import at.technikum.repositories.card.CardRepository;
@@ -17,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class PackageController {
     private static final ICardRepository cardRepository = new CardRepository();
@@ -40,8 +42,21 @@ public class PackageController {
 
         ArrayList<ACard> cards = new ArrayList<>();
         for(StoreCardRequest c : packageRequest) {
-            cards.add(cardRepository.create(c.getId(), c.getName(), c.getDamage(), c.getName().contains("Spell") ? ECardType.SPELL : ECardType.MONSTER, EElementType.FIRE, newPackage.getId()));
+            cards.add(cardRepository.create(c.getId(), c.getName(), c.getDamage(), c.getName().contains("Spell") ? ECardType.SPELL : ECardType.MONSTER, getElementTypeBasedOnName(c.getName()), newPackage.getId()));
         }
         return new Response(HttpStatus.CREATED, EContentType.JSON, PackageMapper.packageToJson(newPackage));
+    }
+
+    public static EElementType getElementTypeBasedOnName(String name) {
+        if(Objects.equals(name, CardName.Dragon.name)
+        || Objects.equals(name, CardName.FireElf.name)
+        || Objects.equals(name, CardName.FireSpell.name))
+            return EElementType.FIRE;
+        if(Objects.equals(name, CardName.Kraken.name)
+        || Objects.equals(name, CardName.WaterSpell.name)
+        || Objects.equals(name, CardName.WaterGoblin.name))
+            return EElementType.WATER;
+
+        return EElementType.NORMAL;
     }
 }

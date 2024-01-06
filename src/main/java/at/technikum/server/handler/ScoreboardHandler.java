@@ -18,7 +18,7 @@ public class ScoreboardHandler extends AHandler{
         if(!isAuthorized(request))
             return new Response(HttpStatus.UNAUTHORIZED, EContentType.JSON, HttpStatus.UNAUTHORIZED.message);
 
-        return this.scoreboardController.show(requestUser);
+        return this.scoreboardController.show();
     }
 }
 

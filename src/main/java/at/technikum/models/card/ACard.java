@@ -22,7 +22,17 @@ public abstract class ACard extends AModel {
     }
 
     protected String name;
+
+    public int getDamage() {
+        return damage;
+    }
+
     protected final int damage;
+
+    public EElementType getElementType() {
+        return elementType;
+    }
+
     protected EElementType elementType;
     protected int packageId;
 

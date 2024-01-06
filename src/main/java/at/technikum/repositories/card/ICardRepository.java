@@ -19,5 +19,5 @@ public interface ICardRepository {
 
     ACard setDeck(int id, boolean deck);
 
-
+    ACard setUserId(int id, int userId);
 }

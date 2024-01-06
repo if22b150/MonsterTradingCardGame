@@ -161,4 +161,19 @@ public class CardRepository implements ICardRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public ACard setUserId(int id, int userId) {
+        String query = "UPDATE cards SET user_id = ? where id = ?;";
+        try {
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
+            statement.setInt(1,userId);
+            statement.setInt(2,id);
+            statement.executeUpdate();
+
+            return this.get(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package at.technikum;
+package at.technikum.utils;
 
 public enum CardName {
     RegularSpell("RegularSpell"),

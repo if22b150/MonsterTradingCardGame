@@ -12,7 +12,29 @@ import java.util.ArrayList;
 public class UserRepository implements IUserRepository{
     @Override
     public ArrayList<User> all() {
-        return new ArrayList<>();
+        String query = "SELECT * FROM users where username != ?;";
+        try {
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
+            statement.setString(1,"admin");
+            ResultSet result = statement.executeQuery();
+
+            ArrayList<User> users = new ArrayList<>();
+
+            while(result.next()) {
+                users.add(new User(
+                        result.getInt("id"),
+                        result.getString("username"),
+                        result.getString("name"),
+                        result.getString("bio"),
+                        result.getString("image"),
+                        result.getInt("coins"),
+                        result.getString("password")
+                ));
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
