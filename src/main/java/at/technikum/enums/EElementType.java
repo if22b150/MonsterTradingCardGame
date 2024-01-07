@@ -1,4 +1,4 @@
-package at.technikum.utils.enums;
+package at.technikum.enums;
 
 public enum EElementType {
     FIRE("fire"),

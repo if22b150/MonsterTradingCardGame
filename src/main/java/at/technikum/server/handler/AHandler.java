@@ -1,11 +1,13 @@
 package at.technikum.server.handler;
 
+import at.technikum.enums.HttpMethod;
 import at.technikum.models.Session;
 import at.technikum.models.User;
 import at.technikum.repositories.session.SessionRepository;
 import at.technikum.repositories.user.UserRepository;
 import at.technikum.server.*;
 import at.technikum.server.middlewares.IMiddleware;
+import at.technikum.server.routes.HttpRoute;
 
 import java.util.ArrayList;
 import java.util.HashMap;

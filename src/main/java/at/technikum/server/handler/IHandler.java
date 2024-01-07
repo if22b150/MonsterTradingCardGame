@@ -1,8 +1,8 @@
 package at.technikum.server.handler;
 
 import at.technikum.models.User;
-import at.technikum.server.HttpMethod;
-import at.technikum.server.HttpRoute;
+import at.technikum.enums.HttpMethod;
+import at.technikum.server.routes.HttpRoute;
 import at.technikum.server.Request;
 import at.technikum.server.Response;
 import at.technikum.server.middlewares.IMiddleware;

@@ -1,5 +1,8 @@
 package at.technikum.server.handler;
 
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpMethod;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.*;
 import at.technikum.server.controller.DeckController;
 

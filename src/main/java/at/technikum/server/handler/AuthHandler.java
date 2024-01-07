@@ -1,7 +1,8 @@
 package at.technikum.server.handler;
 
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.controller.AuthController;
-import at.technikum.server.controller.UserController;
 import at.technikum.server.*;
 
 public class AuthHandler extends AHandler{

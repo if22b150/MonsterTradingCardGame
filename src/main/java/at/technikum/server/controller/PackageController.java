@@ -1,19 +1,19 @@
 package at.technikum.server.controller;
 
-import at.technikum.utils.CardName;
+import at.technikum.enums.ECardName;
 import at.technikum.models.Package;
 import at.technikum.models.card.ACard;
 import at.technikum.repositories.card.CardRepository;
 import at.technikum.repositories.card.ICardRepository;
 import at.technikum.repositories.packages.IPackageRepository;
 import at.technikum.repositories.packages.PackageRepository;
-import at.technikum.server.EContentType;
-import at.technikum.server.HttpStatus;
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.Response;
 import at.technikum.server.mappers.PackageMapper;
 import at.technikum.server.requests.StoreCardRequest;
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
+import at.technikum.enums.ECardType;
+import at.technikum.enums.EElementType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -48,13 +48,13 @@ public class PackageController {
     }
 
     public static EElementType getElementTypeBasedOnName(String name) {
-        if(Objects.equals(name, CardName.Dragon.name)
-        || Objects.equals(name, CardName.FireElf.name)
-        || Objects.equals(name, CardName.FireSpell.name))
+        if(Objects.equals(name, ECardName.Dragon.name)
+        || Objects.equals(name, ECardName.FireElf.name)
+        || Objects.equals(name, ECardName.FireSpell.name))
             return EElementType.FIRE;
-        if(Objects.equals(name, CardName.Kraken.name)
-        || Objects.equals(name, CardName.WaterSpell.name)
-        || Objects.equals(name, CardName.WaterGoblin.name))
+        if(Objects.equals(name, ECardName.Kraken.name)
+        || Objects.equals(name, ECardName.WaterSpell.name)
+        || Objects.equals(name, ECardName.WaterGoblin.name))
             return EElementType.WATER;
 
         return EElementType.NORMAL;

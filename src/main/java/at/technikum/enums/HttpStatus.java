@@ -1,4 +1,4 @@
-package at.technikum.server;
+package at.technikum.enums;
 
 /**
  * Enum representing HTTP status codes with their corresponding messages.

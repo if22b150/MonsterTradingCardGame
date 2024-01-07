@@ -16,12 +16,11 @@ import at.technikum.repositories.user.IUserRepository;
 import at.technikum.repositories.user.UserRepository;
 import at.technikum.repositories.userStat.IUserStatRepository;
 import at.technikum.repositories.userStat.UserStatRepository;
-import at.technikum.server.EContentType;
-import at.technikum.server.HttpStatus;
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.Response;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class BattleController {
     private static final IUserRepository userRepository = new UserRepository();

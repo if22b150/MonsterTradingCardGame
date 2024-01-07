@@ -1,6 +1,6 @@
-package at.technikum.utils;
+package at.technikum.enums;
 
-public enum CardName {
+public enum ECardName {
     RegularSpell("RegularSpell"),
     Ork("Ork"),
     FireSpell("FireSpell"),
@@ -19,7 +19,7 @@ public enum CardName {
      *
      * @param name The card type.
      */
-    CardName(String name) {
+    ECardName(String name) {
         this.name = name;
     }
 }

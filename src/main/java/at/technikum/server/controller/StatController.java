@@ -1,17 +1,14 @@
 package at.technikum.server.controller;
 
-import at.technikum.models.Battle;
 import at.technikum.models.User;
 import at.technikum.models.UserStat;
 import at.technikum.repositories.battle.BattleRepository;
 import at.technikum.repositories.battle.IBattleRepository;
 import at.technikum.repositories.userStat.IUserStatRepository;
 import at.technikum.repositories.userStat.UserStatRepository;
-import at.technikum.server.EContentType;
-import at.technikum.server.HttpStatus;
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.Response;
-
-import java.util.ArrayList;
 
 public class StatController {
     private static final IBattleRepository battleRepository = new BattleRepository();

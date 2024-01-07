@@ -1,5 +1,7 @@
 package at.technikum.server;
 
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.handler.IHandler;
 import at.technikum.server.middlewares.IMiddleware;
 

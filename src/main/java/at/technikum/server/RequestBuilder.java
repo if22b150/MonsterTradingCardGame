@@ -1,5 +1,7 @@
 package at.technikum.server;
 
+import at.technikum.enums.HttpMethod;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Locale;

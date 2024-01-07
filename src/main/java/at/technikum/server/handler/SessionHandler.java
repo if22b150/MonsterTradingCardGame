@@ -1,7 +1,7 @@
 package at.technikum.server.handler;
 
-import at.technikum.server.EContentType;
-import at.technikum.server.HttpStatus;
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.Request;
 import at.technikum.server.Response;
 import at.technikum.server.controller.SessionController;

@@ -1,10 +1,9 @@
 package at.technikum.server.handler;
 
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.*;
-import at.technikum.server.controller.DeckController;
 import at.technikum.server.controller.StatController;
-
-import java.util.Objects;
 
 public class StatHandler extends AHandler{
     StatController statController = new StatController();

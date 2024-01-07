@@ -1,12 +1,11 @@
 package at.technikum.repositories.card;
 
 import at.technikum.database.Database;
-import at.technikum.models.User;
 import at.technikum.models.card.ACard;
 import at.technikum.models.card.MonsterCard;
 import at.technikum.models.card.SpellCard;
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
+import at.technikum.enums.ECardType;
+import at.technikum.enums.EElementType;
 
 import java.sql.*;
 import java.util.ArrayList;

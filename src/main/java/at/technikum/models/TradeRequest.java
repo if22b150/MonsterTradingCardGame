@@ -1,6 +1,6 @@
 package at.technikum.models;
 
-import at.technikum.utils.enums.ECardType;
+import at.technikum.enums.ECardType;
 
 public class TradeRequest extends AModel {
     protected String publicId;

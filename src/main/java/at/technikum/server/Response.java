@@ -1,10 +1,11 @@
 package at.technikum.server;
 
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
+
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-
-import static at.technikum.server.mappers.UserMapper.objectMapper;
 
 public class Response {
     private int status;

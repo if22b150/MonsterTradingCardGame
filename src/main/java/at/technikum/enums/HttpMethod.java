@@ -1,4 +1,4 @@
-package at.technikum.server;
+package at.technikum.enums;
 
 public enum HttpMethod {
     GET,

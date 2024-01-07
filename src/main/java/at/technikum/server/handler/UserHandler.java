@@ -1,5 +1,7 @@
 package at.technikum.server.handler;
 
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.models.Session;
 import at.technikum.models.User;
 import at.technikum.repositories.session.SessionRepository;

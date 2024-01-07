@@ -1,8 +1,8 @@
 package at.technikum.server.controller;
 
 import at.technikum.server.mappers.UserMapper;
-import at.technikum.server.EContentType;
-import at.technikum.server.HttpStatus;
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.Response;
 import at.technikum.server.requests.auth.LoginRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;

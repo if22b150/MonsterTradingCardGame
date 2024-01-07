@@ -3,9 +3,9 @@ package at.technikum;
 import at.technikum.models.BattleRound;
 import at.technikum.models.User;
 import at.technikum.models.card.ACard;
-import at.technikum.utils.CardName;
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
+import at.technikum.enums.ECardName;
+import at.technikum.enums.ECardType;
+import at.technikum.enums.EElementType;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -15,11 +15,11 @@ public class BattleLogic {
     // calculate damage of first parameter card
     public static int getDamage(ACard card1, ACard card2) {
         // specialties
-        if((Objects.equals(card1.getName(), CardName.WaterGoblin.name) && Objects.equals(card2.getName(), CardName.Dragon.name))
-        || (Objects.equals(card1.getName(), CardName.Ork.name) && Objects.equals(card2.getName(), CardName.Wizard.name))
-        || (Objects.equals(card1.getName(), CardName.Knight.name) && Objects.equals(card2.getName(), CardName.WaterSpell.name))
-        || (Objects.equals(card1.getType(), ECardType.SPELL) && Objects.equals(card2.getName(), CardName.Kraken.name))
-        || (Objects.equals(card1.getName(), CardName.Dragon.name) && Objects.equals(card2.getName(), CardName.FireElf.name)))
+        if((Objects.equals(card1.getName(), ECardName.WaterGoblin.name) && Objects.equals(card2.getName(), ECardName.Dragon.name))
+        || (Objects.equals(card1.getName(), ECardName.Ork.name) && Objects.equals(card2.getName(), ECardName.Wizard.name))
+        || (Objects.equals(card1.getName(), ECardName.Knight.name) && Objects.equals(card2.getName(), ECardName.WaterSpell.name))
+        || (Objects.equals(card1.getType(), ECardType.SPELL) && Objects.equals(card2.getName(), ECardName.Kraken.name))
+        || (Objects.equals(card1.getName(), ECardName.Dragon.name) && Objects.equals(card2.getName(), ECardName.FireElf.name)))
             return 0;
 
         if (card1.getType() != ECardType.MONSTER || card2.getType() != ECardType.MONSTER) {

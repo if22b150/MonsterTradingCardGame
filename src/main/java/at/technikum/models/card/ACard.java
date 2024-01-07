@@ -1,8 +1,8 @@
 package at.technikum.models.card;
 
 import at.technikum.models.AModel;
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
+import at.technikum.enums.ECardType;
+import at.technikum.enums.EElementType;
 
 public abstract class ACard extends AModel {
     public String getPublicId() {

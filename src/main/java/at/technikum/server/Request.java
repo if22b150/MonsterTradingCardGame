@@ -1,5 +1,7 @@
 package at.technikum.server;
 
+import at.technikum.enums.HttpMethod;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

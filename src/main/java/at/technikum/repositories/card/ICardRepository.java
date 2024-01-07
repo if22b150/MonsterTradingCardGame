@@ -1,9 +1,8 @@
 package at.technikum.repositories.card;
 
 import at.technikum.models.card.ACard;
-import at.technikum.repositories.IRepository;
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
+import at.technikum.enums.ECardType;
+import at.technikum.enums.EElementType;
 
 import java.util.ArrayList;
 

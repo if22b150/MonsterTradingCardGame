@@ -1,5 +1,6 @@
-package at.technikum.server;
+package at.technikum.server.routes;
 
+import at.technikum.enums.HttpMethod;
 import at.technikum.server.middlewares.IMiddleware;
 
 import java.util.ArrayList;

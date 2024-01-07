@@ -3,11 +3,10 @@ package at.technikum.server.controller;
 import at.technikum.models.User;
 import at.technikum.repositories.card.CardRepository;
 import at.technikum.repositories.card.ICardRepository;
-import at.technikum.server.EContentType;
-import at.technikum.server.HttpStatus;
+import at.technikum.enums.EContentType;
+import at.technikum.enums.HttpStatus;
 import at.technikum.server.Response;
 import at.technikum.server.mappers.CardMapper;
-import at.technikum.server.mappers.TransactionMapper;
 
 public class CardController {
     private static final ICardRepository cardRepository = new CardRepository();

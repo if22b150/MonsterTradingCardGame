@@ -1,7 +1,6 @@
 package at.technikum.server.routes;
 
-import at.technikum.server.HttpMethod;
-import at.technikum.server.HttpRoute;
+import at.technikum.enums.HttpMethod;
 import at.technikum.server.Router;
 import at.technikum.server.handler.*;
 import at.technikum.server.middlewares.AuthMiddleware;

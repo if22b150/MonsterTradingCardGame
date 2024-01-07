@@ -5,8 +5,8 @@ import at.technikum.models.Package;
 import at.technikum.models.card.ACard;
 import at.technikum.models.card.MonsterCard;
 import at.technikum.models.card.SpellCard;
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
+import at.technikum.enums.ECardType;
+import at.technikum.enums.EElementType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

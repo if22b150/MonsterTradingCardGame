@@ -1,7 +1,7 @@
 package at.technikum.models.card;
 
-import at.technikum.utils.enums.ECardType;
-import at.technikum.utils.enums.EElementType;
+import at.technikum.enums.ECardType;
+import at.technikum.enums.EElementType;
 
 public class SpellCard extends ACard {
     public SpellCard(int id, String publicId, String name, int damage, EElementType elementType, int packageId) {
