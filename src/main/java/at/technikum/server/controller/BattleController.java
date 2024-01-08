@@ -1,6 +1,6 @@
 package at.technikum.server.controller;
 
-import at.technikum.BattleLogic;
+import at.technikum.server.BattleLogic;
 import at.technikum.models.Battle;
 import at.technikum.models.BattleRound;
 import at.technikum.models.User;

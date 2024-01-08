@@ -140,4 +140,32 @@ public class BattleRepository implements IBattleRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public ArrayList<BattleRound> getRoundsByBattle(int battleId) {
+        String query = "SELECT * FROM battle_rounds where battle_id = ? ;";
+        try {
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
+            statement.setInt(1,battleId);
+            ResultSet result = statement.executeQuery();
+
+            ArrayList<BattleRound> battleRounds = new ArrayList<>();
+
+            while(result.next()) {
+                battleRounds.add(
+                    new BattleRound(
+                            result.getInt("id"),
+                            result.getInt("battle_id"),
+                            result.getInt("card_user_1_id"),
+                            result.getInt("card_user_2_id"),
+                            result.getInt("user_1_damage"),
+                            result.getInt("user_2_damage")
+                    )
+                );
+            }
+            return battleRounds;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

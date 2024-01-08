@@ -19,7 +19,7 @@ public class BattleHandler extends AHandler{
 
         if (enteredQueue) {
             // Client entered the battle queue successfully
-            return new Response(HttpStatus.OK, EContentType.JSON, "[\"Entered the battle queue.\"]");
+            return new Response(HttpStatus.OK, EContentType.JSON, "[\"Entered the battle arena.\"]");
         } else {
             // Check if the client has timed out
             if (!BattleManager.isClientInQueue(requestUser)) {

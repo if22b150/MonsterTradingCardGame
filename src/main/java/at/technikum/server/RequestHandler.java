@@ -56,7 +56,6 @@ public class RequestHandler implements Runnable, AutoCloseable {
                     HttpStatus.BAD_REQUEST.message
             );
         } else {
-//            response = this.router.resolve(request.getServiceRoute()).handleRequest(request);
             IHandler handler = this.router.resolve(resolvedRoute);
             if (handler != null) {
                 if(!handler.getAllowedMethods().contains(request.getMethod())) {

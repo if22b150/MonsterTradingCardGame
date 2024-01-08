@@ -5,6 +5,7 @@ import at.technikum.models.card.MonsterCard;
 import at.technikum.models.card.SpellCard;
 import at.technikum.enums.ECardName;
 import at.technikum.enums.EElementType;
+import at.technikum.server.BattleLogic;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 

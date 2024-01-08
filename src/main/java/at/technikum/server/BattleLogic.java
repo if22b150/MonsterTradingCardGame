@@ -1,4 +1,4 @@
-package at.technikum;
+package at.technikum.server;
 
 import at.technikum.models.BattleRound;
 import at.technikum.models.User;

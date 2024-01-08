@@ -104,6 +104,7 @@ echo.
 REM --------------------------------------------------
 echo 8) show all acquired cards kienboec
 curl -X GET http://localhost:10001/cards --header "Authorization: Bearer kienboec-mtcgToken"
+echo.
 echo should fail (no token)
 curl -X GET http://localhost:10001/cards
 echo.
@@ -212,6 +213,8 @@ echo 17) battle
 start /b "kienboec battle" curl -X POST http://localhost:10001/battles --header "Authorization: Bearer kienboec-mtcgToken"
 start /b "altenhof battle" curl -X POST http://localhost:10001/battles --header "Authorization: Bearer altenhof-mtcgToken"
 ping localhost -n 10 >NUL 2>NUL
+echo.
+echo.
 
 REM --------------------------------------------------
 echo 18) Stats
@@ -228,10 +231,3 @@ echo 19) scoreboard
 curl -X GET http://localhost:10001/scoreboard --header "Authorization: Bearer kienboec-mtcgToken"
 echo.
 echo.
-
-REM --------------------------------------------------
-echo end...
-
-REM this is approx a sleep
-ping localhost -n 100 >NUL 2>NUL
-@echo on

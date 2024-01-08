@@ -12,4 +12,5 @@ public interface IBattleRepository {
     Battle setWinnerAndLoserUserId(int id, int winnerId, int loserId);
     BattleRound storeBattleRound(int battleId, int cardUser1Id, int cardUser2Id, int user1Damage, int user2Damage);
     ArrayList<Battle> getByUser(int userId, Boolean won);
+    ArrayList<BattleRound> getRoundsByBattle(int battleId);
 }
