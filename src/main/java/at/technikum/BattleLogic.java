@@ -6,11 +6,14 @@ import at.technikum.models.card.ACard;
 import at.technikum.enums.ECardName;
 import at.technikum.enums.ECardType;
 import at.technikum.enums.EElementType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class BattleLogic {
+    private static final Logger logger = LogManager.getLogger("battles");
 
     // calculate damage of first parameter card
     public static int getDamage(ACard card1, ACard card2) {
@@ -40,26 +43,23 @@ public class BattleLogic {
     }
 
     public static void printBattleRoundResult(BattleRound battleRound) {
-        System.out.println(battleRound.getUser1().getUsername() + " attacks with " + battleRound.getUser1Card().getName() + " (" + battleRound.getUser1Card().getDamage() + ") -> Actual Damage: " + battleRound.getUser1Damage());
-        System.out.println(battleRound.getUser2().getUsername() + " attacks with " + battleRound.getUser2Card().getName() + " (" + battleRound.getUser2Card().getDamage() + ") -> Actual Damage: " + battleRound.getUser2Damage());
-        System.out.println();
+        logger.info(battleRound.getUser1().getUsername() + " attacks with " + battleRound.getUser1Card().getName() + " (" + battleRound.getUser1Card().getDamage() + ") -> Actual Damage: " + battleRound.getUser1Damage());
+        logger.info(battleRound.getUser2().getUsername() + " attacks with " + battleRound.getUser2Card().getName() + " (" + battleRound.getUser2Card().getDamage() + ") -> Actual Damage: " + battleRound.getUser2Damage());
         if(battleRound.getWinnerUser() == null) {
-            System.out.println("DRAW");
+            logger.info("DRAW");
         } else {
-            System.out.println("WINNER: " + battleRound.getWinnerUser().getUsername());
-            System.out.println("-> Card \"" + battleRound.getLoserCard().getPublicId() + "\" (" + battleRound.getLoserCard().getName() + ") goes from " + battleRound.getLoserUser().getUsername() + " to " + battleRound.getWinnerUser().getUsername());
+            logger.info("WINNER: " + battleRound.getWinnerUser().getUsername());
+            logger.info("-> Card \"" + battleRound.getLoserCard().getPublicId() + "\" (" + battleRound.getLoserCard().getName() + ") goes from " + battleRound.getLoserUser().getUsername() + " to " + battleRound.getWinnerUser().getUsername());
         }
-        System.out.println();
     }
 
     public static void printUsersDecks(User user1, User user2, ArrayList<ACard> user1Deck, ArrayList<ACard> user2Deck) {
-        System.out.println("Deck of " + user1.getUsername() + ":");
+        logger.info("Deck of " + user1.getUsername() + ":");
         for(ACard card : user1Deck)
-            System.out.println("    " + card.getName() + " (" + card.getDamage() + ")");
-        System.out.println();
-        System.out.println("Deck of " + user2.getUsername() + ":");
+            logger.info("    " + card.getName() + " (" + card.getDamage() + ")");
+
+        logger.info("Deck of " + user2.getUsername() + ":");
         for(ACard card : user2Deck)
-            System.out.println("    " + card.getName() + " (" + card.getDamage() + ")");
-        System.out.println();
+            logger.info("    " + card.getName() + " (" + card.getDamage() + ")");
     }
 }

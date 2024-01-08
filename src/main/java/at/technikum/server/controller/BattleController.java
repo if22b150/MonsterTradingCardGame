@@ -19,11 +19,13 @@ import at.technikum.repositories.userStat.UserStatRepository;
 import at.technikum.enums.EContentType;
 import at.technikum.enums.HttpStatus;
 import at.technikum.server.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class BattleController {
+    private static final Logger logger = LogManager.getLogger("battles");
     private static final IUserRepository userRepository = new UserRepository();
     private static final IBattleRepository battleRepository = new BattleRepository();
     private static final ICardRepository cardRepository = new CardRepository();
@@ -33,6 +35,8 @@ public class BattleController {
     public Response store(int user1Id, int user2Id) {
         User user1 = userRepository.get(user1Id);
         User user2 = userRepository.get(user2Id);
+
+        logger.info("Battle started with users " + user1.getUsername() + " and " + user2.getUsername());
 
         Battle battle = battleRepository.store(user1Id, user2Id, "IN_PROGRESS");
 
@@ -46,7 +50,7 @@ public class BattleController {
         while (round < 101) {
             // show how much cards are left in each user's deck
             if(round > 1)
-                System.out.println("(Remaining cards in deck: " + user1.getUsername() + ": " + user1Deck.size() + "; " + user2.getUsername() + ": " + user2Deck.size() + ")\n");
+                logger.info("(Remaining cards in deck: " + user1.getUsername() + ": " + user1Deck.size() + "; " + user2.getUsername() + ": " + user2Deck.size() + ")");
 
             // if deck of one user is empty, game is over
             if(user1Deck.isEmpty() || user2Deck.isEmpty()) {
@@ -55,14 +59,10 @@ public class BattleController {
                 battleRepository.setStatus(battle.getId(), "FINISHED");
                 battleRepository.setWinnerAndLoserUserId(battle.getId(), user1Deck.isEmpty() ? user2.getId() : user1.getId(), user1Deck.isEmpty() ? user1.getId() : user2.getId());
 
-                System.out.println("----------------------------------------");
-                System.out.println("!!! WINNER is " + battleWinner.getUsername() + " !!!");
-
-
                 break;
             }
 
-            System.out.println("--------\nRound " + round + "\n--------");
+            logger.info("\n--------\nRound " + round + "\n--------");
 
             // print users decks
             BattleLogic.printUsersDecks(user1, user2, user1Deck, user2Deck);
@@ -97,7 +97,7 @@ public class BattleController {
                 if(battleRound.getWinnerUser().getId() == user1Id) {
                     int indexOfLoserCard = getIndexOfCardInDeck(user2Deck, battleRound.getLoserCard().getId());
                     if(indexOfLoserCard == -1) {
-                        System.out.println("Card could not be traded");
+                        logger.error("Card could not be traded");
                     } else {
                         ACard cardToTrade = user2Deck.remove(indexOfLoserCard);
                         user1Deck.add(cardToTrade);
@@ -105,7 +105,7 @@ public class BattleController {
                 } else {
                     int indexOfLoserCard = getIndexOfCardInDeck(user1Deck, battleRound.getLoserCard().getId());
                     if(indexOfLoserCard == -1) {
-                        System.out.println("Card could not be traded");
+                        logger.error("Card could not be traded");
                     } else {
                         ACard cardToTrade = user1Deck.remove(indexOfLoserCard);
                         user2Deck.add(cardToTrade);
@@ -151,7 +151,8 @@ public class BattleController {
         userStatRepository.createOrUpdate(user1Id,gamesPlayedUser1,eloUser1);
         userStatRepository.createOrUpdate(user2Id,gamesPlayedUser2,eloUser2);
 
-        System.out.println("----------------------------------------\nBATTLE OVER\n----------------------------------------");
+        logger.info("\n----------------------------------------\nBATTLE OVER! Result: " + ((battleWinner != null) ? ("!!! WINNER IS " + battleWinner.getUsername() + " !!!") : "DRAW") + "\n----------------------------------------");
+
 
         return new Response(HttpStatus.OK, EContentType.JSON, HttpStatus.OK.message);
     }

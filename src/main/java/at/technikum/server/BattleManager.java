@@ -50,7 +50,6 @@ public class BattleManager {
         waitingClients.keySet().removeAll(battleQueue);
 
         // Start the battle (implement your battle logic here)
-        System.out.println("Battle started with clients: " + battleQueue);
         BattleController battleController = new BattleController();
         battleController.store(client1Id, client2Id);
 
