@@ -34,6 +34,11 @@ public abstract class ACard extends AModel {
     }
 
     protected EElementType elementType;
+
+    public int getPackageId() {
+        return packageId;
+    }
+
     protected int packageId;
 
     public Integer getUserId() {

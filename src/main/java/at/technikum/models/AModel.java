@@ -3,7 +3,7 @@ package at.technikum.models;
 
 public abstract class AModel {
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

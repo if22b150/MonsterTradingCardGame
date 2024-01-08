@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class DeckController {
     private static final ICardRepository cardRepository = new CardRepository();
@@ -34,7 +35,7 @@ public class DeckController {
                 ACard card = cardRepository.getByPublicId(cardId);
                 if(card == null)
                     return new Response(HttpStatus.UNPROCESSABLE_ENTITY, EContentType.HTML, "Card " + cardId + " does not exist.");
-                if(card.getUserId() == null || card.getUserId() != user.getId())
+                if(card.getUserId() == null || !Objects.equals(card.getUserId(), user.getId()))
                     return new Response(HttpStatus.UNPROCESSABLE_ENTITY, EContentType.HTML, "Card " + cardId + " does not belong to user.");
                 cards.add(card);
             }

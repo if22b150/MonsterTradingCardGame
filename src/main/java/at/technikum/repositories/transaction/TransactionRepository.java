@@ -53,4 +53,16 @@ public class TransactionRepository implements ITransactionRepository {
 
         return transaction;
     }
+
+    @Override
+    public void delete(int id) {
+        String query = "DELETE FROM transactions WHERE id = ?;";
+        try {
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
+            statement.setInt(1,id);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

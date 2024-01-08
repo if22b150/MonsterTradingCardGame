@@ -3,7 +3,6 @@ package at.technikum.repositories.battle;
 import at.technikum.database.Database;
 import at.technikum.models.Battle;
 import at.technikum.models.BattleRound;
-import at.technikum.models.card.ACard;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -36,12 +36,6 @@ public class User extends AModel {
 
     private int coins;
 
-    public int getElo() {
-        return elo;
-    }
-
-    public int elo;
-
     public User(String username) {
         this.username = username;
         this.coins = 20;

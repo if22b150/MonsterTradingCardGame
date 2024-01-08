@@ -175,4 +175,16 @@ public class CardRepository implements ICardRepository {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public void delete(int id) {
+        String query = "DELETE FROM cards WHERE id = ?;";
+        try {
+            PreparedStatement statement = Database.getConnection().prepareStatement(query);
+            statement.setInt(1,id);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

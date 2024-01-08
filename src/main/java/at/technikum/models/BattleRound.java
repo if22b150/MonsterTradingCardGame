@@ -2,6 +2,8 @@ package at.technikum.models;
 
 import at.technikum.models.card.ACard;
 
+import java.util.Objects;
+
 public class BattleRound extends AModel {
     int battleId;
     int cardUser1Id;
@@ -63,7 +65,7 @@ public class BattleRound extends AModel {
         return user1Damage > user2Damage ? user2 : (user2Damage > user1Damage ? user1 : null);
     }
     public ACard getLoserCard() {
-        return getWinnerUser().getId() == user1.getId() ? user2Card : (getWinnerUser() == null ? null : user1Card);
+        return Objects.equals(getWinnerUser().getId(), user1.getId()) ? user2Card : (getWinnerUser() == null ? null : user1Card);
     }
 
     public BattleRound(int id, int battleId, int cardUser1Id, int cardUser2Id, int user1Damage, int user2Damage) {

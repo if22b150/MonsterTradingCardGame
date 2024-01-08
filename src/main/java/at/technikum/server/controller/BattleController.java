@@ -21,6 +21,7 @@ import at.technikum.enums.HttpStatus;
 import at.technikum.server.Response;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BattleController {
     private static final IUserRepository userRepository = new UserRepository();
@@ -94,11 +95,24 @@ public class BattleController {
 
                 // perform trade on battleDecks
                 if(battleRound.getWinnerUser().getId() == user1Id) {
-                    ACard cardToTrade = user2Deck.remove(user2Deck.indexOf(user2Deck.stream().filter(card -> card.getId() == battleRound.getLoserCard().getId()).findFirst().orElse(null)));
-                    user1Deck.add(cardToTrade);
+                    int indexOfLoserCard = getIndexOfCardInDeck(user2Deck, battleRound.getLoserCard().getId());
+                    if(indexOfLoserCard == -1) {
+                        System.out.println("Card could not be traded");
+                    } else {
+                        ACard cardToTrade = user2Deck.remove(indexOfLoserCard);
+                        user1Deck.add(cardToTrade);
+                    }
                 } else {
-                    ACard cardToTrade = user1Deck.remove(user1Deck.indexOf(user1Deck.stream().filter(card -> card.getId() == battleRound.getLoserCard().getId()).findFirst().orElse(null)));
-                    user2Deck.add(cardToTrade);
+                    int indexOfLoserCard = getIndexOfCardInDeck(user1Deck, battleRound.getLoserCard().getId());
+                    if(indexOfLoserCard == -1) {
+                        System.out.println("Card could not be traded");
+                    } else {
+                        ACard cardToTrade = user1Deck.remove(indexOfLoserCard);
+                        user2Deck.add(cardToTrade);
+                    }
+
+//                    ACard cardToTrade = user1Deck.remove(user1Deck.indexOf(user1Deck.stream().filter(card -> Objects.equals(card.getId(), battleRound.getLoserCard().getId())).findFirst().orElse(null)));
+//                    user2Deck.add(cardToTrade);
                 }
             }
 
@@ -142,5 +156,14 @@ public class BattleController {
         return new Response(HttpStatus.OK, EContentType.JSON, HttpStatus.OK.message);
     }
 
+    private static int getIndexOfCardInDeck(ArrayList<ACard> deck, int cardId) {
+        int index = 0;
+        for(ACard c : deck) {
+            if(c.getId() == cardId)
+                return index;
+            index++;
+        }
+        return -1;
+    }
 
 }

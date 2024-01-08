@@ -5,4 +5,5 @@ import at.technikum.models.User;
 
 public interface ITransactionRepository {
     Transaction create(int userId, int packageId);
+    void delete(int id);
 }

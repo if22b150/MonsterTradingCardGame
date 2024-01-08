@@ -214,7 +214,6 @@ start /b "altenhof battle" curl -X POST http://localhost:10001/battles --header 
 ping localhost -n 10 >NUL 2>NUL
 
 REM --------------------------------------------------
-echo .
 echo 18) Stats
 echo kienboec
 curl -X GET http://localhost:10001/stats --header "Authorization: Bearer kienboec-mtcgToken"
@@ -229,3 +228,10 @@ echo 19) scoreboard
 curl -X GET http://localhost:10001/scoreboard --header "Authorization: Bearer kienboec-mtcgToken"
 echo.
 echo.
+
+REM --------------------------------------------------
+echo end...
+
+REM this is approx a sleep
+ping localhost -n 100 >NUL 2>NUL
+@echo on

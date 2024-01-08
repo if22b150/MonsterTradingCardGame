@@ -11,4 +11,6 @@ public interface IPackageRepository {
     ArrayList<ACard> getCards(int packageId);
 
     int getAvailable();
+
+    void delete(int id);
 }
