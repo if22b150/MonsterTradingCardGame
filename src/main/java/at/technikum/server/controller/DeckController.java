@@ -18,7 +18,10 @@ public class DeckController {
     private static final ICardRepository cardRepository = new CardRepository();
 
     public Response index(User user, boolean inPlain) {
-        return new Response(HttpStatus.OK, EContentType.JSON, CardMapper.cardsToJson(cardRepository.getUserDeck(user.getId())));
+        if(!inPlain)
+            return new Response(HttpStatus.OK, EContentType.JSON, CardMapper.cardsToJson(cardRepository.getUserDeck(user.getId())));
+        else
+            return new Response(HttpStatus.OK, EContentType.PLAIN_TEXT, CardMapper.deckToPlainText(user, cardRepository.getUserDeck(user.getId())));
     }
 
     public Response setDeck(String body, User user) {

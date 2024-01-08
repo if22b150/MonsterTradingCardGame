@@ -1,5 +1,6 @@
 package at.technikum.server.mappers;
 
+import at.technikum.models.User;
 import at.technikum.models.card.ACard;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -20,13 +21,11 @@ public class CardMapper {
         }
     }
 
-//    public static String usersToJson(ArrayList<User> users) {
-//        try {
-//            objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-//            return objectMapper.writeValueAsString(users);
-//        } catch (IOException e) {
-//            // Handle the exception appropriately
-//            return e.getMessage(); // or return an error message
-//        }
-//    }
+    public static String deckToPlainText(User user, ArrayList<ACard> cards) {
+        String r = "Deck of " + user.getUsername();
+        for(ACard c : cards) {
+            r += "\n    " + c.getName() + " (" + c.getDamage() + ")";
+        }
+        return r;
+    }
 }
